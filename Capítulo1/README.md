@@ -22,19 +22,146 @@ Agregar una tabla con la información que pueda requerir el participante durante
 
 ## Instrucciones 
 <!-- Proporciona pasos detallados sobre cómo configurar y administrar sistemas, implementar soluciones de software, realizar pruebas de seguridad, o cualquier otro escenario práctico relevante para el campo de la tecnología de la información -->
-### Tarea 1. Descripción de la tarea a realizar.
-Paso 1. Debe de relatar el instructor en verbo infinito, claro y conciso cada actividad para ir construyendo paso a paso en el objetivo de la tarea.
+# Laboratorio de Fundamentos del Sistema Linux en Ubuntu
 
-Paso 2. <!-- Añadir instrucción -->
+## Objetivo de la práctica:
+Al finalizar la práctica, serás capaz de:
+- Entender la arquitectura del sistema operativo Linux
+- Conocer los principales directorios del sistema de archivos FHS
+- Usar los principales comandos y archivos de administración de usuarios y grupos
+- Saber manejar los permisos en archivos y directorios
 
-Paso 3. <!-- Añadir instrucción -->
+## Duración aproximada:
+- 100 minutos.
 
-### Tarea 2. Descripción de la tarea a realizar.
-Paso 1. Debe de relatar el instructor en verbo infinito, claro y conciso cada actividad para ir construyendo paso a paso en el objetivo de la tarea.
+## Laboratorio 1.
 
-Paso 2. <!-- Añadir instrucción -->
+### Configuración Inicial (Antes de empezar cualquier laboratorio):
+* Asegúrate de tener una máquina virtual o un sistema Ubuntu real funcionando. Para la mayoría de estos laboratorios, necesitarás acceso de superusuario (sudo).
+* Abre una terminal: Puedes hacerlo pulsando `Ctrl + Alt + T` o buscando "Terminal" en el menú de aplicaciones.
 
-Paso 3. <!-- Añadir instrucción -->
+### Laboratorio 1.1: Arquitectura de Linux (Repaso y Observación)
+* **Objetivo:** Comprender de forma práctica la separación entre el espacio de usuario y el kernel, y cómo interactúan las aplicaciones.
+* **Descripción:** No hay un "laboratorio" directo para ver la arquitectura como tal, pero podemos observar las capas interactuando.
+* **Pasos:**
+    * **Observar el Kernel:**
+        * Abre una terminal.
+        * Ejecuta el comando `uname -a`. Esto te mostrará información detallada sobre el kernel que estás utilizando (nombre, versión, fecha de compilación, etc.).
+        * `uname -r` te dará solo la versión del kernel.
+        * **Concepto:** Esta es la "base" de tu sistema operativo. Todas las aplicaciones en el espacio de usuario interactúan con el kernel para acceder al hardware, gestionar procesos, etc.
+    * **Observar Procesos en el Espacio de Usuario:**
+        * Ejecuta el comando `ps aux`. Esto listará todos los procesos que se están ejecutando actualmente en tu sistema. Observa la gran cantidad de procesos, la mayoría de los cuales son aplicaciones o servicios en el espacio de usuario.
+        * **Concepto:** Cada una de estas entradas representa un programa o servicio que se ejecuta en el espacio de usuario, utilizando los recursos y servicios proporcionados por el kernel.
+* **Reflexión:** ¿Cómo crees que un programa como Firefox (espacio de usuario) interactúa con el hardware de red para cargar una página web? Piensa en el rol del kernel.
+
+### Laboratorio 1.2: El Sistema de Archivos de Linux
+* **Objetivo:** Explorar la jerarquía estándar del sistema de archivos de Linux (FHS) y comprender la importancia de directorios clave.
+* **Pasos:**
+    * **Explorar el directorio raíz (`/`):**
+        * Ejecuta `cd /` para ir al directorio raíz.
+        * Ejecuta `ls -l` para listar su contenido.
+        * **Preguntas para reflexionar:**
+            * ¿Qué directorios observas?
+            * ¿Qué tipo de información crees que se almacena en `/bin`, `/etc`, `/home`, `/var`?
+            * Investiga qué es el FHS y por qué es importante.
+    * **Explorar `/home`:**
+        * Ejecuta `cd /home`.
+        * Ejecuta `ls -l`. Verás tu directorio de usuario.
+        * Ejecuta `cd tu_usuario` (reemplaza `tu_usuario` con tu nombre de usuario).
+        * Ejecuta `ls -l`. Aquí es donde se guardan tus archivos personales, configuraciones, etc.
+    * **Explorar `/etc`:**
+        * Ejecuta `cd /etc`.
+        * Ejecuta `ls -l`.
+        * **Concepto:** Este directorio contiene archivos de configuración del sistema. Son cruciales para el funcionamiento de Linux.
+        * Ejecuta `cat /etc/passwd`. Este archivo contiene información sobre los usuarios del sistema. (No modifiques este archivo a menos que sepas exactamente lo que haces).
+    * **Explorar `/var`:**
+        * Ejecuta `cd /var`.
+        * Ejecuta `ls -l`.
+        * **Concepto:** Este directorio contiene datos variables, como archivos de registro (logs), bases de datos, correos electrónicos, etc. Los logs son vitales para la resolución de problemas.
+        * Ejecuta `ls -l /var/log`. Aquí encontrarás muchos archivos de registro. Puedes usar `tail -f /var/log/syslog` para ver los mensajes del sistema en tiempo real (usa `Ctrl + C` para salir).
+* **Reflexión:** ¿Por qué crees que es importante tener una estructura de directorios estandarizada en Linux?
+
+### Laboratorio 1.3: La Línea de Comandos (CLI) - Comandos Básicos
+* **Objetivo:** Familiarizarse con los comandos esenciales de la CLI para navegar, manipular archivos y obtener ayuda.
+* **Pasos:**
+    * **Navegación:**
+        * `pwd`: Muestra el directorio de trabajo actual.
+        * `cd ..`: Sube un nivel en la jerarquía de directorios.
+        * `cd ~` o `cd`: Te lleva a tu directorio personal (`/home/tu_usuario`).
+        * `ls`: Lista el contenido del directorio actual.
+        * `ls -l`: Lista el contenido en formato largo (detalles).
+        * `ls -a`: Lista también archivos y directorios ocultos.
+        * `ls -lh`: Lista en formato largo y con tamaño legible.
+    * **Manipulación de Archivos y Directorios:**
+        * Crea un directorio de pruebas: `mkdir mi_directorio_de_pruebas`.
+        * Entra en él: `cd mi_directorio_de_pruebas`.
+        * Crea un archivo vacío: `touch mi_primer_archivo.txt`.
+        * Edita el archivo con un editor de texto simple (nano): `nano mi_primer_archivo.txt`. Escribe algo, guarda (`Ctrl + O`, `Enter`) y sal (`Ctrl + X`).
+        * Visualiza el contenido del archivo: `cat mi_primer_archivo.txt`.
+        * Copia el archivo: `cp mi_primer_archivo.txt mi_copia_del_archivo.txt`.
+        * Mueve el archivo: `mv mi_copia_del_archivo.txt ../otro_nombre.txt`. (Intenta moverlo un nivel arriba y cambiarle el nombre).
+        * Vuelve a tu directorio de pruebas: `cd mi_directorio_de_pruebas`.
+        * Borra el archivo: `rm mi_primer_archivo.txt`.
+        * Intenta borrar el directorio (vacío): `rmdir mi_directorio_de_pruebas`. (Solo funciona si está vacío).
+        * Crea un archivo y un directorio dentro del directorio de pruebas. Luego, borra el directorio y su contenido de forma recursiva y forzada: `rm -rf mi_directorio_de_pruebas`. (¡MUCHO CUIDADO con `rm -rf`! Puede borrar cosas importantes sin pedir confirmación).
+    * **Obtener Ayuda:**
+        * `man ls`: Muestra la página de manual del comando `ls`. Presiona `q` para salir.
+        * `ls --help`: Muestra un resumen de las opciones del comando `ls`.
+        * `whatis ls`: Proporciona una descripción de una línea del comando.
+* **Reflexión:** ¿Qué ventajas tiene usar la línea de comandos sobre una interfaz gráfica para estas tareas? ¿Qué desventajas?
+
+### Laboratorio 1.4: Permisos de Archivos y Directorios
+* **Objetivo:** Comprender el modelo de permisos de Linux (propietario, grupo, otros) y cómo modificarlos.
+* **Pasos:**
+    * **Observar Permisos:**
+        * Crea un archivo: `touch permisos_prueba.txt`.
+        * Ejecuta `ls -l permisos_prueba.txt`.
+        * **Análisis de la salida:**
+            * La primera columna (`-rw-r--r--`) son los permisos.
+            * Los siguientes campos son: número de enlaces, propietario, grupo, tamaño, fecha, nombre del archivo.
+            * `d` al principio indica un directorio. `-` indica un archivo.
+            * Los permisos se dividen en 3 bloques de 3 caracteres:
+                * 1er bloque: Propietario (`u` - user)
+                * 2do bloque: Grupo (`g` - group)
+                * 3er bloque: Otros (`o` - others)
+            * `r` (read - lectura), `w` (write - escritura), `x` (execute - ejecución)
+    * **Cambiar Permisos (Método Simbólico):**
+        * Dale permiso de escritura a "otros": `chmod o+w permisos_prueba.txt`.
+        * Verifica: `ls -l permisos_prueba.txt`.
+        * Quítale permiso de ejecución a "propietario": `chmod u-x permisos_prueba.txt`. (No tendrá efecto si ya no tenía `x`).
+        * Dale permiso de ejecución a "todos" (propietario, grupo, otros): `chmod a+x permisos_prueba.txt`.
+    * **Cambiar Permisos (Método Octal):**
+        * **Concepto:**
+            * `r = 4`
+            * `w = 2`
+            * `x = 1`
+            * Suma los valores para cada conjunto (propietario, grupo, otros).
+        * Por ejemplo: `rwx` es `4+2+1 = 7`. `rw-` es `4+2+0 = 6`. `r--` es `4+0+0 = 4`.
+        * Establece permisos `rw-r--r--` (644): `chmod 644 permisos_prueba.txt`.
+        * Establece permisos `rwxr-xr-x` (755) para un script o un directorio: `chmod 755 mi_directorio`.
+    * **Cambiar Propietario y Grupo:**
+        * Cambia el propietario a `root` (necesitarás `sudo`): `sudo chown root permisos_prueba.txt`.
+        * Cambia el grupo a `root` (necesitarás `sudo`): `sudo chgrp root permisos_prueba.txt`.
+        * Vuelve a cambiar el propietario y grupo a tu usuario: `sudo chown tu_usuario:tu_usuario permisos_prueba.txt`.
+* **Reflexión:** ¿Por qué es tan importante la gestión de permisos en un sistema multiusuario como Linux? ¿Qué riesgos existen si los permisos no se configuran correctamente?
+
+### Laboratorio 1.5: Gestión de Procesos
+* **Objetivo:** Aprender a listar, monitorear y terminar procesos en Linux.
+* **Pasos:**
+    * **Listar Procesos:**
+        * `ps aux`: Muestra todos los procesos que se están ejecutando en el sistema, incluyendo los de otros usuarios.
+        * `ps -ef`: Similar a `ps aux`, pero con un formato diferente que a veces es más legible.
+        * `pstree`: Muestra los procesos en una vista de árbol, lo que ayuda a ver las relaciones padre-hijo.
+    * **Monitorear Procesos en Tiempo Real:**
+        * `top`: Muestra una vista dinámica y en tiempo real de los procesos que consumen más CPU y memoria. Presiona `q` para salir.
+        * `htop` (si no está instalado, instálalo con `sudo apt update && sudo apt install htop`): Una alternativa más interactiva y visual a `top`. Presiona `F10` o `q` para salir.
+    * **Terminar Procesos:**
+        * **Identificar un proceso para terminar:** Abre una segunda terminal. En ella, ejecuta un comando que se quede "colgado" o que puedas identificar fácilmente, por ejemplo: `sleep 600` (esto hará que el proceso espere 600 segundos).
+        * En la primera terminal, usa `ps aux | grep sleep` para encontrar el PID (ID de proceso) del comando `sleep`.
+        * **Terminar suavemente:** `kill PID` (reemplaza `PID` con el número de proceso). Esto envía la señal `SIGTERM` (15), pidiendo al proceso que termine limpiamente. El proceso `sleep` debería terminar.
+        * **Terminar forzosamente (último recurso):** Si un proceso no responde a `kill`, puedes forzar su terminación con `kill -9 PID` (envía la señal `SIGKILL` - 9). Esto no permite que el proceso realice ninguna limpieza, así que úsalo con precaución.
+        * **Terminar por nombre:** `pkill nombre_proceso` o `killall nombre_proceso`. Por ejemplo, `pkill firefox`. (¡Cuidado con estos, pueden cerrar múltiples instancias!)
+* **Reflexión:** ¿Cuándo usarías `kill` vs `kill -9`? ¿Por qué es importante monitorear los procesos en un servidor?
 
 ### Resultado esperado
 En esta sección, se debe mostrar el resultado esperado de nuestro laboratorio
