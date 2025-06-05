@@ -1,6 +1,4 @@
-# Laboratorio 2.
-
-## Gestión de Procesos, Systemd y Software
+# Laboratorio Gestión de Procesos, Systemd y Software
 
 ## Objetivo de la práctica:
 Al finalizar la práctica, serás capaz de:
