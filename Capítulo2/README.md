@@ -11,8 +11,6 @@ Al finalizar la práctica, serás capaz de:
 ## Duración aproximada:
 - 80 minutos.
 
-## Gestión de Usuarios y Grupos en Linux
-
 ### Configuración Inicial:
 * Asegúrate de tener una máquina virtual Ubuntu o un sistema Linux con acceso `sudo`.
 * Abre una terminal.
@@ -20,8 +18,6 @@ Al finalizar la práctica, serás capaz de:
 # Laboratorio 2
 
 ---
-
-## Laboratorios Detallados: Gestión de Procesos, Systemd y Software
 
 ### Laboratorio 2.1: Gestión y Monitoreo de Procesos y Servicios (systemd)
 
