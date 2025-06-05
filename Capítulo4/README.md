@@ -1,4 +1,4 @@
-# Servicios de Red 
+# Laboratorio Servicios de Red 
 
 ## Objetivo de la práctica:
 Al finalizar la práctica, serás capaz de:
