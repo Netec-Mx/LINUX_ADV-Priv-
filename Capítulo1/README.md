@@ -2,59 +2,83 @@
 
 ## Objetivo de la práctica:
 Al finalizar la práctica, serás capaz de:
-- Entender la arquitectura del sistema operativo Linux
-- Conocer los principales directorios del sistema de archivos FHS
-- Usar los principales comandos y archivos de administración de usuarios y grupos
-- Saber manejar los permisos en archivos y directorios
+- Entender la arquitectura del sistema operativo Linux.
+- Conocer los principales directorios del sistema de archivos FHS.
+- Usar los principales comandos y archivos de administración de usuarios y grupos.
+- Saber manejar los permisos en archivos y directorios.
 
 ## Duración aproximada:
 - 100 minutos.
 
-## Laboratorio 1.
-
-### Configuración Inicial (Antes de empezar cualquier laboratorio):
+### Configuración inicial (antes de empezar cualquier laboratorio):
 * Asegúrate de tener una máquina virtual o un sistema Ubuntu real funcionando. Para la mayoría de estos laboratorios, necesitarás acceso de superusuario (sudo).
 * Abre una terminal: Puedes hacerlo pulsando `Ctrl + Alt + T` o buscando "Terminal" en el menú de aplicaciones.
 
-### Laboratorio 1.1: Arquitectura de Linux (Repaso y Observación)
-* **Objetivo:** Comprender de forma práctica la separación entre el espacio de usuario y el kernel, y cómo interactúan las aplicaciones.
-* **Descripción:** No hay un "laboratorio" directo para ver la arquitectura como tal, pero podemos observar las capas interactuando.
-* **Pasos:**
-    * **Observar el Kernel:**
-        * Abre una terminal.
-        * Ejecuta el comando `uname -a`. Esto te mostrará información detallada sobre el kernel que estás utilizando (nombre, versión, fecha de compilación, etc.).
+## Práctica 1.1. Arquitectura de Linux (repaso y observación)
+
+- **Objetivo:** Comprender de forma práctica la separación entre el espacio de usuario y el kernel, y cómo interactúan las aplicaciones.
+- **Descripción:** No hay un "laboratorio" directo para ver la arquitectura como tal, pero podemos observar las capas interactuando.
+
+### **Instrucciones:**
+
+### Tarea 1. Observar el Kernel:**
+
+Paso 1. Abre una terminal.
+Paso 2. Ejecuta el comando `uname -a`. Esto te mostrará información detallada sobre el kernel que estás utilizando (nombre, versión, fecha de compilación, etc.)
         * `uname -r` te dará solo la versión del kernel.
-        * **Concepto:** Esta es la "base" de tu sistema operativo. Todas las aplicaciones en el espacio de usuario interactúan con el kernel para acceder al hardware, gestionar procesos, etc.
-    * **Observar Procesos en el Espacio de Usuario:**
-        * Ejecuta el comando `ps aux`. Esto listará todos los procesos que se están ejecutando actualmente en tu sistema. Observa la gran cantidad de procesos, la mayoría de los cuales son aplicaciones o servicios en el espacio de usuario.
-        * **Concepto:** Cada una de estas entradas representa un programa o servicio que se ejecuta en el espacio de usuario, utilizando los recursos y servicios proporcionados por el kernel.
+> **Concepto:** Esta es la "base" de tu sistema operativo. Todas las aplicaciones en el espacio de usuario interactúan con el kernel para acceder al hardware, gestionar procesos, etc.
+
+### Tarea 2. **Observar procesos en el espacio de usuario:**
+
+Paso 1. Ejecuta el comando `ps aux`. Esto listará todos los procesos que se están ejecutando actualmente en tu sistema. Observa la gran cantidad de procesos, la mayoría de los cuales son aplicaciones o servicios en el espacio de usuario.
+> **Concepto:** Cada una de estas entradas representa un programa o servicio que se ejecuta en el espacio de usuario, utilizando los recursos y servicios proporcionados por el kernel.
+
 * **Reflexión:** ¿Cómo crees que un programa como Firefox (espacio de usuario) interactúa con el hardware de red para cargar una página web? Piensa en el rol del kernel.
 
-### Laboratorio 1.2: El Sistema de Archivos de Linux
-* **Objetivo:** Explorar la jerarquía estándar del sistema de archivos de Linux (FHS) y comprender la importancia de directorios clave.
-* **Pasos:**
-    * **Explorar el directorio raíz (`/`):**
-        * Ejecuta `cd /` para ir al directorio raíz.
-        * Ejecuta `ls -l` para listar su contenido.
-        * **Preguntas para reflexionar:**
-            * ¿Qué directorios observas?
-            * ¿Qué tipo de información crees que se almacena en `/bin`, `/etc`, `/home`, `/var`?
-            * Investiga qué es el FHS y por qué es importante.
-    * **Explorar `/home`:**
-        * Ejecuta `cd /home`.
-        * Ejecuta `ls -l`. Verás tu directorio de usuario.
-        * Ejecuta `cd tu_usuario` (reemplaza `tu_usuario` con tu nombre de usuario).
-        * Ejecuta `ls -l`. Aquí es donde se guardan tus archivos personales, configuraciones, etc.
-    * **Explorar `/etc`:**
-        * Ejecuta `cd /etc`.
-        * Ejecuta `ls -l`.
-        * **Concepto:** Este directorio contiene archivos de configuración del sistema. Son cruciales para el funcionamiento de Linux.
-        * Ejecuta `cat /etc/passwd`. Este archivo contiene información sobre los usuarios del sistema. (No modifiques este archivo a menos que sepas exactamente lo que haces).
-    * **Explorar `/var`:**
-        * Ejecuta `cd /var`.
-        * Ejecuta `ls -l`.
-        * **Concepto:** Este directorio contiene datos variables, como archivos de registro (logs), bases de datos, correos electrónicos, etc. Los logs son vitales para la resolución de problemas.
-        * Ejecuta `ls -l /var/log`. Aquí encontrarás muchos archivos de registro. Puedes usar `tail -f /var/log/syslog` para ver los mensajes del sistema en tiempo real (usa `Ctrl + C` para salir).
+</br>
+
+### Práctica 1.2. Sistema de archivos: Jerarquía FHS (Filesystem Hierarchy Standard)
+
+- **Objetivo:** Explorar la jerarquía estándar del sistema de archivos de Linux (FHS) y comprender la importancia de directorios clave.
+
+### Instrucciones:
+
+### Tarea 1. **Explorar el directorio raíz (`/`)**
+
+Paso 1. Ejecuta `cd /` para ir al directorio raíz.
+Paso 2. Ejecuta `ls -l` para listar su contenido.
+
+* **Preguntas para reflexionar:**
+- *¿Qué directorios observas?*
+- *¿Qué tipo de información crees que se almacena en `/bin`, `/etc`, `/home`, `/var`?*
+- *Investiga qué es el FHS y por qué es importante.*
+  
+### Tarea 2. Explorar `/home`**
+
+Paso 1. Ejecuta `cd /home`.
+Paso 2. Ejecuta `ls -l`. Verás tu directorio de usuario.
+Paso 3. Ejecuta `cd tu_usuario` (reemplaza `tu_usuario` con tu nombre de usuario).
+Paso 4. Ejecuta `ls -l`. Aquí es donde se guardan tus archivos personales, configuraciones, etc.
+
+
+### Tarea 3. Explorar `/etc`:
+
+Paso 1. Ejecuta `cd /etc`.
+Paso 2. Ejecuta `ls -l`.
+
+>**Concepto:** Este directorio contiene archivos de configuración del sistema. Son cruciales para el funcionamiento de Linux.
+
+Paso 3. Ejecuta `cat /etc/passwd`. Este archivo contiene información sobre los usuarios del sistema. (No modifiques este archivo a menos que sepas exactamente lo que haces).
+
+### Tarea 4. Explorar `/var`:
+
+Paso 1. Ejecuta `cd /var`.
+Paso 2. Ejecuta `ls -l`.
+
+> **Concepto:** Este directorio contiene datos variables, como archivos de registro (logs), bases de datos, correos electrónicos, etc. Los logs son vitales para la resolución de problemas.
+
+Paso 3. Ejecuta `ls -l /var/log`. Aquí encontrarás muchos archivos de registro. Puedes usar `tail -f /var/log/syslog` para ver los mensajes del sistema en tiempo real (usa `Ctrl + C` para salir).
+
 * **Reflexión:** ¿Por qué crees que es importante tener una estructura de directorios estandarizada en Linux?
 
 ### Laboratorio 1.3: La Línea de Comandos (CLI) - Comandos Básicos
