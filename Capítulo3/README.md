@@ -1,4 +1,4 @@
-# Nombre del laboratorio 
+# Laboratorios de Redes en Linux
 
 ## Objetivo de la práctica:
 Al finalizar la práctica, serás capaz de:
@@ -12,8 +12,6 @@ Al finalizar la práctica, serás capaz de:
 - 100 minutos.
 
 # Laboratorio 3
-
-## Laboratorios de Redes en Linux
 
 ### Laboratorio 3.1: Comandos Clave para Diagnóstico y Visibilidad de Red
 
