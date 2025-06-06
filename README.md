@@ -36,6 +36,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
    - **Descripción**: Aprender a listar, monitorear y terminar procesos en Linux.
    - ⏱️ **Duración estimada**: 25 minutos.
 
+</br>
 
 [Gestión de procesos, systemd y software](./Capítulo2/README.md)
 
@@ -51,6 +52,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
    - **Descripción**: Comprender la importancia de los logs del sistema para el diagnóstico, utilizar journalctl para visualizar, filtrar y buscar información relevante en los logs.
    - ⏱️ **Duración estimada**: 25 minutos.
 
+<br/>
 
 [Redes en Linux](./Capítulo3/README.md)
 
@@ -76,6 +78,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
    - **Descripción**: Configurar una subinterfaz VLAN en una interfaz física existente y asignar una dirección IP y verificar la configuración de la subinterfaz.
    - ⏱️ **Duración estimada**: 20 minutos.
 
+<br/>
 
 [Servicios de red](./Capítulo4/README.md)
 
@@ -93,6 +96,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
    - **Descripción**: Identificar puertos en estado de escucha y sus procesos asociados usando ss, usar lsof para encontrar qué proceso está usando un puerto específico.  
    - ⏱️ **Duración estimada**: 30 minutos.
 
+<br/>
 
 [Automatización](./Capítulo5/README.md)
 
@@ -112,6 +116,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
    - **Descripción**: Procesar y filtrar archivos de log en formato JSON usando jq. 
    - ⏱️ **Duración estimada**: 50 minutos.
 
+<br/>
 
 [Seguridad básica en Linux](./Capítulo6/README.md)
 
@@ -131,6 +136,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
    - **Descripción**: Aplicar medidas básicas de endurecimiento a SSH y al kernel.  
    - ⏱️ **Duración estimada**: 30 minutos.
 
+<br/>
 
 [Troubleshooting y operación en producción](./Capítulo7/README.md)
 
@@ -150,6 +156,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
    - **Descripción**:  Aprender a usar dmesg y journalctl para diagnosticar problemas a nivel de kernel y hardware.
    - ⏱️ **Duración estimada**: 25 minutos.
 
+<br/>
 
 [Buenas prácticas y mantenimiento en producción](./Capítulo8/README.md)
 
