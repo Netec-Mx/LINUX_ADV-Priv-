@@ -1,6 +1,6 @@
 # Gestión de Procesos, Systemd y Software
 
-## Práctica 2.1. Gestión y monitoreo de procesos y servicios (systemd)
+# Práctica 2.1. Gestión y monitoreo de procesos y servicios (systemd)
 
 ## Objetivos de la práctica:
 
