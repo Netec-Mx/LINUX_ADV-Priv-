@@ -135,7 +135,7 @@ Paso 1. Haz una **COPIA DE SEGURIDAD** de tu archivo `.yaml` actual:
 
 Paso 2. Edita el archivo `.yaml` para configurar una IP estática (ejemplo):
 
-        ```yaml
+```
         # ADAPTA ESTE EJEMPLO A TU INTERFAZ Y RED LOCAL
         network:
           version: 2
@@ -149,7 +149,8 @@ Paso 2. Edita el archivo `.yaml` para configurar una IP estática (ejemplo):
                   via: <IP_GATEWAY_EJEMPLO> # Tu gateway (ej: 192.168.1.1)
               nameservers:
                 addresses: [8.8.8.8, 8.8.4.4] # Servidores DNS (ej: Google DNS)
-        ```
+   ```
+        
         * `sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml`
         
 Paso 1. Aplica la configuración de Netplan:
