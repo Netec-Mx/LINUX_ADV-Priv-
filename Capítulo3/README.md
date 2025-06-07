@@ -277,7 +277,7 @@ Paso 3. Verifica que la subinterfaz ya no existe:
 
 ---
 
-# Laboratorio 3.4: Configuración básica del firewall UFW
+# Práctica 3.4. Configuración básica del firewall UFW
 
 ## Objetivos de la práctica:
 
