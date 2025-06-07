@@ -112,9 +112,10 @@ Paso 3. Ejecuta `ls -l /var/log`. Aquí encontrarás muchos archivos de registro
 
 <br/>
 
-### Práctica 1.4: Permisos de archivos y directorios
+# Práctica 1.4: Permisos de archivos y directorios
 
-- Objetivo: Comprender el modelo de permisos de Linux (propietario, grupo, otros) y cómo modificarlos.
+## Objetivo de la práctica: 
+- Comprender el modelo de permisos de Linux (propietario, grupo, otros) y cómo modificarlos.
 
 ### Instrucciones
 
