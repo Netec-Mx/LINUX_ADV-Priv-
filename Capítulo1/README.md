@@ -1,25 +1,13 @@
-# Laboratorio de Fundamentos del Sistema Linux en Ubuntu
+# Práctica 1.1. Arquitectura de Linux (repaso y observación)
 
-## Objetivo de la práctica:
-Al finalizar la práctica, serás capaz de:
-- Entender la arquitectura del sistema operativo Linux.
-- Conocer los principales directorios del sistema de archivos FHS.
-- Usar los principales comandos y archivos de administración de usuarios y grupos.
-- Saber manejar los permisos en archivos y directorios.
-
-## Duración aproximada:
-- 100 minutos.
+## Objetivo de la práctica: 
+- Comprender de forma práctica la separación entre el espacio de usuario y el kernel, y cómo interactúan las aplicaciones.
 
 ### Configuración inicial (antes de empezar cualquier laboratorio):
-* Asegúrate de tener una máquina virtual o un sistema Ubuntu real funcionando. Para la mayoría de estos laboratorios, necesitarás acceso de superusuario (sudo).
-* Abre una terminal: Puedes hacerlo pulsando `Ctrl + Alt + T` o buscando "Terminal" en el menú de aplicaciones.
+ -Asegúrate de tener una máquina virtual o un sistema Ubuntu real funcionando. Para la mayoría de estos laboratorios, necesitarás acceso de superusuario (sudo).
+- Abre una terminal: Puedes hacerlo pulsando `Ctrl + Alt + T` o buscando "Terminal" en el menú de aplicaciones.
 
-## Práctica 1.1. Arquitectura de Linux (repaso y observación)
-
-- **Objetivo:** Comprender de forma práctica la separación entre el espacio de usuario y el kernel, y cómo interactúan las aplicaciones.
-- **Descripción:** No hay un "laboratorio" directo para ver la arquitectura como tal, pero podemos observar las capas interactuando.
-
-### **Instrucciones:
+### Instrucciones:
 
 ### Tarea 1. Observar el Kernel:
 
@@ -39,13 +27,14 @@ Paso 1. Ejecuta el comando `ps aux`. Esto listará todos los procesos que se est
 
 </br>
 
-## Práctica 1.2. Sistema de archivos: Jerarquía FHS (Filesystem Hierarchy Standard)
+# Práctica 1.2. Sistema de archivos: Jerarquía FHS (Filesystem Hierarchy Standard)
 
-- **Objetivo:** Explorar la jerarquía estándar del sistema de archivos de Linux (FHS) y comprender la importancia de directorios clave.
+## Objetivo de la práctica:
+- Explorar la jerarquía estándar del sistema de archivos de Linux (FHS) y comprender la importancia de directorios clave.
 
 ### Instrucciones:
 
-### Tarea 1. **Explorar el directorio raíz (`/`)**
+### Tarea 1. Explorar el directorio raíz (`/`)
 
 Paso 1. Ejecuta `cd /` para ir al directorio raíz.
 Paso 2. Ejecuta `ls -l` para listar su contenido.
@@ -83,11 +72,12 @@ Paso 3. Ejecuta `ls -l /var/log`. Aquí encontrarás muchos archivos de registro
 
 * **Reflexión:** ¿Por qué crees que es importante tener una estructura de directorios estandarizada en Linux?
 
-## Práctica 1.3. Línea de comandos (CLI) - Comandos básicos
+<br/>
 
-- **Objetivo:** Familiarizarse con los comandos esenciales de la CLI para navegar, manipular archivos y obtener ayuda.
+# Práctica 1.3. Línea de comandos (CLI) - Comandos básicos
 
-### Instrucciones:
+## Objetivo de la práctica: 
+- Familiarizarse con los comandos esenciales de la CLI para navegar, manipular archivos y obtener ayuda.
     
 ### Navegación:
 
@@ -120,6 +110,8 @@ Paso 3. Ejecuta `ls -l /var/log`. Aquí encontrarás muchos archivos de registro
         
 * **Reflexión:** ¿Qué ventajas tiene usar la línea de comandos sobre una interfaz gráfica para estas tareas?, ¿qué desventajas?
 
+<br/>
+
 ### Práctica 1.4: Permisos de archivos y directorios
 
 - Objetivo: Comprender el modelo de permisos de Linux (propietario, grupo, otros) y cómo modificarlos.
@@ -141,15 +133,16 @@ Paso 2. Ejecuta `ls -l permisos_prueba.txt`.
        - 2do bloque: Grupo (`g` - group)
        - 3er bloque: Otros (`o` - others)
             - `r` (read - lectura), `w` (write - escritura), `x` (execute - ejecución).
+
   
-### Tarea 2. Cambiar permisos (Método simbólico)
+### Tarea 2. Cambiar permisos (método simbólico)
 
 Paso 1. Dale permiso de escritura a "otros": `chmod o+w permisos_prueba.txt`.
 Paso 2. Verifica: `ls -l permisos_prueba.txt`.
 Paso 3. Quítale permiso de ejecución a "propietario": `chmod u-x permisos_prueba.txt`. (No tendrá efecto si ya no tenía `x`).
 Paso 4. Dale permiso de ejecución a "todos" (propietario, grupo, otros): `chmod a+x permisos_prueba.txt`.
 
-### Tarea 3. Cambiar permisos (Método octal)
+### Tarea 3. Cambiar permisos (método octal)
 
 - **Concepto:**
        - `r = 4`
@@ -161,7 +154,7 @@ Paso 1. Suma los valores para cada conjunto (propietario, grupo, otros).
 Paso 2. Establece permisos `rw-r--r--` (644): `chmod 644 permisos_prueba.txt`.
 Paso 3. Establece permisos `rwxr-xr-x` (755) para un script o un directorio: `chmod 755 mi_directorio`.
     
-### Tarea 4. Cambiar propietario y grupo:
+### Tarea 4. Cambiar propietario y grupo
 
 Paso 1. Cambia el propietario a `root` (necesitarás `sudo`): `sudo chown root permisos_prueba.txt`.
 Paso 2. Cambia el grupo a `root` (necesitarás `sudo`): `sudo chgrp root permisos_prueba.txt`.
@@ -169,9 +162,12 @@ Paso 3. Vuelve a cambiar el propietario y grupo a tu usuario: `sudo chown tu_usu
 
 * **Reflexión:** ¿Por qué es tan importante la gestión de permisos en un sistema multiusuario como Linux? ¿Qué riesgos existen si los permisos no se configuran correctamente?
 
+<br/>
+
 ### Práctica 1.5. Gestión de procesos
 
-- **Objetivo:** Aprender a listar, monitorear y terminar procesos en Linux.
+### Objetivo de la práctica: 
+- Aprender a listar, monitorear y terminar procesos en Linux.
 
 ### Instrucciones
 
