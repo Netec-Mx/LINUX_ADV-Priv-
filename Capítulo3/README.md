@@ -135,21 +135,20 @@ Paso 1. Haz una **COPIA DE SEGURIDAD** de tu archivo `.yaml` actual:
 
 Paso 2. Edita el archivo `.yaml` para configurar una IP estática (ejemplo):
 
-```
-        # ADAPTA ESTE EJEMPLO A TU INTERFAZ Y RED LOCAL
-        network:
-          version: 2
-          renderer: networkd
-          ethernets:
-            <NOMBRE_INTERFAZ>: # Reemplaza con tu interfaz (ej., enp0s3)
-              dhcp4: no # Deshabilita DHCP para IPv4
-              addresses: [<IP_ESTATICA_EJEMPLO>/<PREFIJO_EJEMPLO>] # Ej: [192.168.1.201/24]
-              routes:
-                - to: default
-                  via: <IP_GATEWAY_EJEMPLO> # Tu gateway (ej: 192.168.1.1)
-              nameservers:
-                addresses: [8.8.8.8, 8.8.4.4] # Servidores DNS (ej: Google DNS)
-   ```
+# ADAPTA ESTE EJEMPLO A TU INTERFAZ Y RED LOCAL
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    <NOMBRE_INTERFAZ>: # Reemplaza con tu interfaz (ej., enp0s3)
+      dhcp4: no # Deshabilita DHCP para IPv4
+      addresses: [<IP_ESTATICA_EJEMPLO>/<PREFIJO_EJEMPLO>] # Ej: [192.168.1.201/24]
+      routes:
+        - to: default
+          via: <IP_GATEWAY_EJEMPLO> # Tu gateway (ej: 192.168.1.1)
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4] # Servidores DNS (ej: Google DNS)
+
         
         * `sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml`
         
