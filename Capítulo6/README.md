@@ -1,49 +1,34 @@
-# Laboratorio Seguridad básica en Linux
+# Práctica 6.1. Gestión de permisos de archivos
 
-## Objetivo de la práctica:
-Al finalizar la práctica, serás capaz de:
-- Aprender como usar el comando sudo y configurar el archivo /etc/sudoers
-- Conocer los comandos de auditoría básica y su uso
-- Enender los conceptos de hardening y minimize del sistema operativo
+Esta práctica te guiará a través de la creación y modificación de **permisos de archivos** y el uso del comando **`sudo`**.
 
-## Duración aproximada:
-- 110 minutos.
+### Objetivos de la práctica:
 
-# Laboratorio 6. Seguridad básica en Linux
+- Comprender cómo los permisos afectan el acceso a archivos.
+- Practicar el uso seguro de `sudo`.
 
----
+### Instrucciones
 
-## Laboratorio 6.1: Permisos y `sudo`
+### Tarea 1. Crea un archivo de prueba
 
-Este laboratorio te guiará a través de la creación y modificación de **permisos de archivos** y el uso del comando **`sudo`**.
-
-### Objetivo:
-
-Comprender cómo los permisos afectan el acceso a archivos y practicar el uso seguro de `sudo`.
-
----
-
-### 6.1: Gestión de Permisos de Archivos
-
-1.  **Crea un archivo de prueba.**
-    Abre tu terminal y crea un archivo simple:
+Paso 1. Abre tu terminal y crea un archivo simple:
 
     ```bash
     echo "Este es un archivo de prueba." > mi_documento.txt
     ls -l mi_documento.txt
     ```
 
-    Observa la salida de `ls -l`. Verás algo como `-rw-r--r--`, indicando permisos de lectura/escritura para el propietario, y solo lectura para el grupo y otros.
+Paso 2. Observa la salida de `ls -l`. Verás algo como `-rw-r--r--`, indicando permisos de lectura/escritura para el propietario, y solo lectura para el grupo y otros.
 
-2.  **Intenta ejecutar el archivo.**
+### Tarea 2. Intenta ejecutar el archivo
 
     ```bash
     ./mi_documento.txt
     ```
 
-    Verás un error de "**Permiso denegado**", porque es un archivo de texto, no un ejecutable.
+Verás un error de "**Permiso denegado**", porque es un archivo de texto, no un ejecutable.
 
-3.  **Convierte el archivo en un script ejecutable y añade permisos.**
+### Tarea 3. Convierte el archivo en un script ejecutable y añade permisos
 
     ```bash
     echo "#!/bin/bash" > mi_script.sh
@@ -52,27 +37,28 @@ Comprender cómo los permisos afectan el acceso a archivos y practicar el uso se
     ls -l mi_script.sh
     ```
 
-    Ahora deberías ver `rwxr-xr-x` en la salida. La `x` al final de cada bloque indica permiso de ejecución.
+Ahora deberías ver `rwxr-xr-x` en la salida. La `x` al final de cada bloque indica permiso de ejecución.
 
-4.  **Ejecuta el script.**
+### Tarea 4. Ejecuta el script
 
     ```bash
     ./mi_script.sh
     ```
 
-    Deberías ver el mensaje "¡Hola desde mi script!".
+Deberías ver el mensaje "¡Hola desde mi script!".
 
-5.  **Restringe permisos de escritura para "otros".**
-    Vamos a quitar el permiso de escritura para la categoría "otros" (world) del script.
+### Tarea 5. Restringe permisos de escritura para "otros"
+
+Paso 1. Vamos a quitar el permiso de escritura para la categoría "otros" (world) del script.
 
     ```bash
     chmod o-w mi_script.sh # Quita el permiso de escritura para "otros"
     ls -l mi_script.sh
     ```
 
-    La salida debería ser ahora `-rwxr-xr-x`. ¡Ah, espera! ¿Por qué no cambió? Porque la "w" para "otros" no estaba activada. Probemos con un archivo donde sí tenga sentido.
+La salida debería ser ahora `-rwxr-xr-x`. ¡Ah, espera! ¿Por qué no cambió? Porque la "w" para "otros" no estaba activada. Probemos con un archivo donde sí tenga sentido.
 
-6.  **Restringe permisos de escritura en un documento.**
+### Tarea 6. Restringe permisos de escritura en un documento
 
     ```bash
     echo "Contenido secreto" > documento_secreto.txt
@@ -80,148 +66,164 @@ Comprender cómo los permisos afectan el acceso a archivos y practicar el uso se
     ls -l documento_secreto.txt
     ```
 
-    Verás que los permisos para "otros" son ahora `-r--` o similares, sin la `w`.
+Verás que los permisos para "otros" son ahora `-r--` o similares, sin la `w`.
 
-7.  **Cambia permisos usando notación numérica.**
-    Ahora cambiaremos el script para que solo el propietario tenga todos los permisos, y nadie más pueda hacer nada con él.
+### Tarea 7. Cambia permisos usando notación numérica
+
+Ahora cambiaremos el script para que solo el propietario tenga todos los permisos, y nadie más pueda hacer nada con él.
 
     ```bash
     chmod 700 mi_script.sh # Propietario: rwx (4+2+1=7), Grupo: --- (0), Otros: --- (0)
     ls -l mi_script.sh
     ```
 
-    La salida será `-rwx------`. Solo tú (el propietario) puedes leer, escribir y ejecutar.
+La salida será `-rwx------`. Solo tú (el propietario) puedes leer, escribir y ejecutar.
 
 ---
 
-### Uso de `sudo`
+## Uso de `sudo`
 
-1.  **Intenta un comando de administrador sin `sudo`.**
+### Tarea 1. Intenta un comando de administrador sin `sudo`
 
     ```bash
     apt update
     ```
 
-    Verás un error que indica que necesitas ser root o usar `sudo`.
+Verás un error que indica que necesitas ser root o usar `sudo`.
 
-2.  **Ejecuta el mismo comando con `sudo`.**
+### Tarea 2. Ejecuta el mismo comando con `sudo`
 
     ```bash
     sudo apt update
     ```
 
-    Se te pedirá tu contraseña de usuario. Ingresa y observa cómo el comando se ejecuta con éxito, ya que `apt update` requiere privilegios elevados.
+Se te pedirá tu contraseña de usuario. Ingresa y observa cómo el comando se ejecuta con éxito, ya que `apt update` requiere privilegios elevados.
 
-3.  **Abre un archivo de sistema con `sudo` y un editor de texto.**
-    El archivo `/etc/hosts` es un archivo de sistema. Intenta abrirlo sin `sudo`:
+### Tarea 3. Abre un archivo de sistema con `sudo` y un editor de texto
+
+Paso 1. El archivo `/etc/hosts` es un archivo de sistema. Intenta abrirlo sin `sudo`:
 
     ```bash
     nano /etc/hosts
     ```
 
-    Verás que `nano` abre el archivo, pero al intentar guardar (`Ctrl+O`), te dirá que no tienes permiso.
+Paso 2. Veras que `nano` abre el archivo, pero al intentar guardar (`Ctrl+O`), te dirá que no tienes permiso.
 
-    Ahora, ábrelo con `sudo`:
+Paso 3. Ahora, ábrelo con `sudo`:
 
     ```bash
     sudo nano /etc/hosts
     ```
 
-    Se te pedirá tu contraseña. Una vez dentro, puedes hacer cambios (no guardes nada crítico para esta prueba) y verás que puedes guardar (`Ctrl+O`) sin problemas.
+Paso 4. Se te pedirá tu contraseña. Una vez dentro, puedes hacer cambios (no guardes nada crítico para esta prueba) y verás que puedes guardar (`Ctrl+O`) sin problemas.
 
-4.  **Entiende el archivo `/etc/sudoers`.**
-    **¡Advertencia!** Siempre usa `sudo visudo` para editar este archivo. Un error de sintaxis puede bloquearte.
+### Tarea 4. Entiende el archivo `/etc/sudoers`
+
+> *¡Advertencia!* Siempre usa `sudo visudo` para editar este archivo. Un error de sintaxis puede bloquearte.
 
     ```bash
     sudo visudo
     ```
 
-    Busca la línea `%sudo ALL=(ALL:ALL) ALL`. Esta línea indica que cualquier usuario en el grupo `sudo` puede ejecutar cualquier comando en cualquier host como cualquier usuario. Sal del editor sin guardar (`Ctrl+X` en `nano`).
+Paso 1. Busca la línea `%sudo ALL=(ALL:ALL) ALL`. 
+
+Esta línea indica que cualquier usuario en el grupo `sudo` puede ejecutar cualquier comando en cualquier host como cualquier usuario. 
+
+Paso 2. Sal del editor sin guardar (`Ctrl+X` en `nano`).
 
 ---
 
-## Laboratorio 6.2: Auditoría Básica
+# Práctica 6.2. Auditoría básica
 
 Este laboratorio te familiarizará con comandos para revisar la actividad de los usuarios y procesos en tu sistema.
 
-### Objetivo:
+## Objetivo de la práctica:
 
-Aprender a usar `last`, `who`, `w`, `ps aux` y a revisar logs para una auditoría básica.
+- Aprender a usar `last`, `who`, `w`, `ps aux` y a revisar logs para una auditoría básica.
 
 ---
 
-1.  **Monitoriza la Actividad de Usuarios. Ve quién se ha conectado recientemente.**
+### Tarea 1. Monitoriza la Actividad de Usuarios. Ve quién se ha conectado recientemente
 
     ```bash
     last
     ```
 
-    Observa la lista de sesiones. Busca tu propio usuario, cualquier "reboot" (reinicios) y la dirección IP desde donde se conectaron.
+Observa la lista de sesiones. Busca tu propio usuario, cualquier "reboot" (reinicios) y la dirección IP desde donde se conectaron.
 
-2.  **Ve quién está conectado ahora mismo.**
+### Tarea 2. Ve quién está conectado ahora mismo
 
     ```bash
     who
     ```
 
-    Deberías verte a ti mismo y quizás otros usuarios si están conectados simultáneamente. Fíjate en la terminal (`tty` o `pts`) y la IP de origen.
+Deberías verte a ti mismo y quizás otros usuarios si están conectados simultáneamente. Fíjate en la terminal (`tty` o `pts`) y la IP de origen.
 
-3.  **Ve quién está conectado y qué está haciendo.**
+### Tarea 3. Ve quién está conectado y qué está haciendo
 
     ```bash
     w
     ```
 
-    Esta es una versión más detallada de `who`. Presta atención a la columna `WHAT` para ver qué comandos están ejecutando los usuarios activos.
+Esta es una versión más detallada de `who`. Presta atención a la columna `WHAT` para ver qué comandos están ejecutando los usuarios activos.
 
 ---
 
-### 6.3: Revisar Procesos en Ejecución
+# Práctica 6.3. Revisar procesos en ejecución
 
-1.  **Lista todos los procesos del sistema.**
+### Tarea 1. Lista todos los procesos del sistema
 
     ```bash
     ps aux
     ```
 
-    Esta lista es muy larga. Presta atención a la columna `USER` para ver qué usuario posee cada proceso y a la columna `COMMAND` para el nombre del programa.
+Esta lista es muy larga. Presta atención a la columna `USER` para ver qué usuario posee cada proceso y a la columna `COMMAND` para el nombre del programa.
 
-2.  **Busca un proceso específico (ej. SSH).**
+### Tarea 2. Busca un proceso específico (ej. SSH)
 
     ```bash
     ps aux | grep sshd
     ```
 
-    Esto filtrará los procesos relacionados con el demonio SSH. Observa que el `USER` es `root` o `sshd`.
+Esto filtrará los procesos relacionados con el demonio SSH. Observa que el `USER` es `root` o `sshd`.
 
 ---
 
-### 6.3: Explorar los Logs del Sistema
+# Práctica 6.3. Explorar los logs del sistema
 
-1.  **Ve el log de autenticación.**
-    Este log es crucial para la seguridad, ya que registra inicios de sesión y usos de `sudo`.
+### Tarea 1. Ve el log de autenticación
+
+Este log es crucial para la seguridad, ya que registra inicios de sesión y usos de `sudo`.
 
     ```bash
     less /var/log/auth.log
     ```
 
-    Usa las flechas para desplazarte. Busca líneas que contengan "Accepted password" (inicio de sesión exitoso) o "Failed password" (intento fallido). Presiona `q` para salir de `less`.
+Paso 1. Usa las flechas para desplazarte. 
 
-2.  **Monitoriza el log de autenticación en tiempo real.**
+Paso 2. Busca líneas que contengan "Accepted password" (inicio de sesión exitoso) o "Failed password" (intento fallido). 
+
+Paso 3. Presiona `q` para salir de `less`.
+
+### Tarea 2. Monitoriza el log de autenticación en tiempo real
 
     ```bash
     sudo tail -f /var/log/auth.log
     ```
 
-    Deja este comando ejecutándose. En otra terminal, intenta iniciar sesión con una contraseña incorrecta (o incluso con tu usuario y contraseña correctos) y observa cómo aparecen nuevas líneas en el log en tiempo real. Presiona `Ctrl+C` para detener `tail`.
+Paso 1. Deja este comando ejecutándose. 
 
-3.  **Busca un comando `sudo` específico en los logs.**
+Paso 2. En otra terminal, intenta iniciar sesión con una contraseña incorrecta (o incluso con tu usuario y contraseña correctos) y observa cómo aparecen nuevas líneas en el log en tiempo real. 
+
+Paso 3. Presiona `Ctrl+C` para detener `tail`.
+
+### Tarea 3. Busca un comando `sudo` específico en los logs
 
     ```bash
     grep "sudo" /var/log/auth.log
     ```
 
-    Verás todas las instancias donde se ha utilizado el comando `sudo` y por qué usuario.
+Verás todas las instancias donde se ha utilizado el comando `sudo` y por qué usuario.
 
 ---
 
