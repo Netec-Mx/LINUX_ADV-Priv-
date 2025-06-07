@@ -1,123 +1,140 @@
-# Laboratorios de Redes en Linux
+# Práctica 3.1. Comandos clave para diagnóstico y visibilidad de red
 
-## Objetivo de la práctica:
-Al finalizar la práctica, serás capaz de:
-- Comprender los conceptos básicos de redes.
-- Familiarizarse con las herramientas de línea de comandos esenciales para manejar la red.
-- Entender la función de un firewall.
-- Diagnosticar y resolver problemas de red comunes en Linux.
+## Objetivos de la práctica:
 
+- Utilizar `ip` para inspeccionar la configuración de interfaces de red, direcciones IP y tablas de enrutamiento. 
+- Emplear `ss` y `netstat` para listar conexiones de red activas y puertos en escucha. 
+- Diagnosticar conectividad básica con `ping` y `traceroute`. 
+- Consultar la caché ARP y realizar consultas DNS con `dig`.
 
-## Duración aproximada:
-- 100 minutos.
+### Instrucciones
 
-# Laboratorio 3
+### Tarea 1.  Inspección de interfaces y direcciones IP (`ip addr show`):
 
-### Laboratorio 3.1: Comandos Clave para Diagnóstico y Visibilidad de Red
-
-**Objetivos del Laboratorio:**
-
-* Utilizar `ip` para inspeccionar la configuración de interfaces de red, direcciones IP y tablas de enrutamiento. [cite: 1]
-* Emplear `ss` y `netstat` para listar conexiones de red activas y puertos en escucha. [cite: 2]
-* Diagnosticar conectividad básica con `ping` y `traceroute`. [cite: 3]
-* Consultar la caché ARP y realizar consultas DNS con `dig`. [cite: 3]
-
-**Solución (Pasos):** [cite: 4]
-
-1.  **Inspección de Interfaces y Direcciones IP (`ip addr show`):**
-    * Abre una terminal. [cite: 4]
-    * Muestra todas las interfaces de red y sus direcciones IP configuradas. [cite: 5]
-    * Identifica tu interfaz principal (ej., `eth0`, `enp0s3`, `ens33`) y su dirección IP. [cite: 6]
+Paso 1. Abre una terminal.
+Paso 2. Muestra todas las interfaces de red y sus direcciones IP configuradas.
+Paso 3. Identifica tu interfaz principal (ej., `eth0`, `enp0s3`, `ens33`) y su dirección IP. 
     * `ip addr show`
     * `# O la forma más concisa: ip a`
 
-2.  **Visualización de la Tabla de Enrutamiento (`ip route show`):**
-    * Muestra la tabla de enrutamiento del kernel, incluyendo la puerta de enlace predeterminada (`default via`). [cite: 8]
-    * `ip route show`
 
-3.  **Monitoreo de Conexiones y Puertos (`ss`, `netstat`):**
-    * Lista todos los puertos de escucha y conexiones activas para TCP y UDP (se prefiere `ss` por ser más moderno y eficiente):
+### Tarea 2. Visualización de la tabla de enrutamiento (`ip route show`):
+
+Muestra la tabla de enrutamiento del kernel, incluyendo la puerta de enlace predeterminada (`default via`). 
+    - `ip route show`
+
+
+### Tarea 3. Monitoreo de conexiones y puertos (`ss`, `netstat`):**
+
+Paso 1. Lista todos los puertos de escucha y conexiones activas para TCP y UDP (se prefiere `ss` por ser más moderno y eficiente):
         * `ss -tuln` # TCP y UDP, en escucha, numérico
         * `ss -ant` # TCP, todas las conexiones, numérico
-    * Filtra para ver si un servicio específico (ej., SSH en puerto 22) está escuchando:
+
+Paso 2. Filtra para ver si un servicio es específico (ej., SSH en puerto 22) está escuchando:
         * `ss -tuln | grep :22` [cite: 9]
         * `(Alternativa más antigua: netstat -tuln)`
 
-4.  **Diagnóstico de Conectividad (`ping`, `traceroute`):**
-    * Haz un ping a tu puerta de enlace para verificar la conectividad local (reemplaza `<DIRECCION_IP_DE_TU_GATEWAY>` con la IP obtenida en el paso 1):
+### Tarea 4.  Diagnóstico de conectividad (`ping`, `traceroute`):
+
+Paso 1. Haz un ping a tu puerta de enlace para verificar la conectividad local (reemplaza `<DIRECCION_IP_DE_TU_GATEWAY>` con la IP obtenida en el paso 1):
         * `ping -c 4 <DIRECCION_IP_DE_TU_GATEWAY>`
-    * Haz un ping a un host externo (ej., Google DNS) para verificar la conectividad a Internet:
+
+Paso 2. Haz un ping a un host externo (ej., Google DNS) para verificar la conectividad a Internet:
         * `ping -c 4 8.8.8.8`
-    * Rastrea la ruta a un host externo para ver los saltos (instala `traceroute` si no lo tienes: `sudo apt install traceroute`):
+
+Paso 3. Rastrea la ruta a un host externo para ver los saltos (instala `traceroute` si no lo tienes: `sudo apt install traceroute`):
         * `traceroute 8.8.8.8`
 
-5.  **Consulta de la Caché ARP (`ip neigh show`):**
-    * Muestra las entradas en la caché ARP (mapeo de direcciones IP a MAC). [cite: 10]
+### Tarea 5. Consulta de la Caccé ARP (`ip neigh show`):
+    
+Paso 1. Muestra las entradas en la caché ARP (mapeo de direcciones IP a MAC).
     * `ip neigh show`
 
-6.  **Resolución de Nombres DNS (`dig`):**
-    * Resuelve un nombre de dominio (ej., `google.com`) a su dirección IP usando los DNS configurados en tu sistema:
+### Tarea 6. Resolución de nombres DNS (`dig`):
+
+Paso 1. Resuelve un nombre de dominio (ej., `google.com`) a su dirección IP usando los DNS configurados en tu sistema:
         * `dig google.com`
-    * Realiza una consulta a un servidor DNS específico (ej., `1.1.1.1` - Cloudflare DNS):
+Paso 2. Realiza una consulta a un servidor DNS específico (ej., `1.1.1.1` - Cloudflare DNS):
         * `dig @1.1.1.1 example.com`
 
 ---
 
-### Laboratorio 3.2: Configuración Básica de Interfaces de Red (IP Estática y DHCP)
+# Práctica 3.2. Configuración básica de interfaces de red (IP Estática y DHCP)
 
-**Objetivos del Laboratorio:**
+## Objetivos de la práctica:
 
-* Identificar la configuración de red actual (DHCP vs. Estática). [cite: 11]
-* Configurar una dirección IP estática en una interfaz de red de forma temporal (en memoria). [cite: 12]
-* Restaurar la configuración de DHCP temporalmente. [cite: 12]
-* Realizar cambios persistentes en la configuración de red utilizando Netplan en Ubuntu. [cite: 13]
+- Identificar la configuración de red actual (DHCP vs. Estática).
+- Configurar una dirección IP estática en una interfaz de red de forma temporal (en memoria).
+- Restaurar la configuración de DHCP temporalmente. 
+- Realizar cambios persistentes en la configuración de red utilizando Netplan en Ubuntu. 
 
-**Prerrequisitos:**
+### Prerrequisitos:
 
-* Una máquina virtual (VM) de Ubuntu. Esto es altamente recomendable para evitar problemas de conectividad en tu máquina principal. [cite: 14]
-* Acceso a la consola de la VM o a una conexión SSH alternativa estable (ej. a través de una segunda interfaz de red o un cliente SSH que no se vea afectado por los cambios). [cite: 15]
+- Una máquina virtual (VM) de Ubuntu. Esto es altamente recomendable para evitar problemas de conectividad en tu máquina principal. 
+- Acceso a la consola de la VM o a una conexión SSH alternativa estable (ej. a través de una segunda interfaz de red o un cliente SSH que no se vea afectado por los cambios). 
+  
+### Instrucciones:
 
-**Solución (Pasos):** [cite: 15]
-
-1.  **Identifica tu interfaz de red principal y su configuración actual:**
+### Tarea 1. Identifica tu interfaz de red principal y su configuración actual:
+    
     * `ip a show` # Identifica el nombre de la interfaz (ej. 'enp0s3')
-    * Anota la IP actual, la máscara de red y la puerta de enlace (si aplica). [cite: 16]
-    * Revisa tu archivo Netplan para entender la configuración persistente (normalmente en `/etc/netplan/`): [cite: 16]
+
+Paso 1. Anota la IP actual, la máscara de red y la puerta de enlace (si aplica). 
+Paso 2. Revisa tu archivo Netplan para entender la configuración persistente (normalmente en `/etc/netplan/`): 
         * `ls /etc/netplan/`
-        * `cat /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml` # Ej. `00-installer-config.yaml` [cite: 17]
+        * `cat /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml` # Ej. `00-installer-config.yaml` 
 
-2.  **Configura una IP estática temporalmente (en RAM, no persistente):**
-    * **¡ADVERTENCIA!** Esto puede cortar tu conexión actual si no estás en la consola. [cite: 18]
-    * Reemplaza `<NOMBRE_INTERFAZ>`, `<IP_ESTATICA_EJEMPLO>`, `<PREFIJO_EJEMPLO>`, `<IP_GATEWAY_EJEMPLO>` con valores adecuados para tu red local. [cite: 19]
-    * `# Baja la interfaz`
-    * `sudo ip link set <NOMBRE_INTERFAZ> down`
-    * `# Elimina cualquier IP existente (opcional pero recomendado si cambias de tipo)`
-    * `sudo ip addr flush dev <NOMBRE_INTERFAZ>`
-    * `# Asigna la nueva IP estática`
-    * `sudo ip addr add <IP_ESTATICA_EJEMPLO>/<PREFIJO_EJEMPLO> dev <NOMBRE_INTERFAZ>` # Ej: `192.168.1.200/24`
-    * `# Levanta la interfaz`
-    * `sudo ip link set <NOMBRE_INTERFAZ> up`
-    * `# Añade la ruta por defecto (gateway)`
-    * `sudo ip route add default via <IP_GATEWAY_EJEMPLO>` # Ej: `192.168.1.1`
-    * Verifica la nueva IP y la ruta:
-        * `ip a show <NOMBRE_INTERFAZ>`
-        * `ip route show`
-        * `ping -c 3 8.8.8.8` # Prueba la conectividad externa
 
-3.  **Restaurar a DHCP temporalmente:**
-    * Libera la IP y solicita una nueva por DHCP:
-        * `sudo ip addr flush dev <NOMBRE_INTERFAZ>` # Elimina todas las IPs de la interfaz [cite: 20]
-        * `sudo dhclient -r <NOMBRE_INTERFAZ>` # Libera DHCP lease anterior (si aplicaba)
-        * `sudo dhclient <NOMBRE_INTERFAZ>` # Solicita una nueva IP DHCP
-    * Verifica la IP asignada por DHCP:
-        * `ip a show <NOMBRE_INTERFAZ>`
+### Tarea 2. Configura una IP estática temporalmente (en RAM, no persistente):
 
-4.  **Configuración Persistente con Netplan (Archivos .yaml):**
-    * Los cambios hechos con `ip` y `dhclient` son temporales y se perderán al reiniciar. [cite: 21]
-    * Netplan gestiona la configuración persistente. [cite: 21]
-    * Haz una **COPIA DE SEGURIDAD** de tu archivo `.yaml` actual:
-        * `sudo cp /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml.bak`
-    * Edita el archivo `.yaml` para configurar una IP estática (ejemplo):
+> ¡ADVERTENCIA!** Esto puede cortar tu conexión actual si no estás en la consola.
+
+Paso 1. Reemplaza `<NOMBRE_INTERFAZ>`, `<IP_ESTATICA_EJEMPLO>`, `<PREFIJO_EJEMPLO>`, `<IP_GATEWAY_EJEMPLO>` con valores adecuados para tu red local. 
+
+```
+    # Baja la interfaz
+    sudo ip link set <NOMBRE_INTERFAZ> down
+    # Elimina cualquier IP existente (opcional pero recomendado si cambias de tipo)
+    sudo ip addr flush dev <NOMBRE_INTERFAZ>
+    # Asigna la nueva IP estática
+    sudo ip addr add <IP_ESTATICA_EJEMPLO>/<PREFIJO_EJEMPLO> dev <NOMBRE_INTERFAZ>` # Ej: `192.168.1.200/24
+    # Levanta la interfaz
+    sudo ip link set <NOMBRE_INTERFAZ> up
+    # Añade la ruta por defecto (gateway)
+    sudo ip route add default via <IP_GATEWAY_EJEMPLO>` # Ej: `192.168.1.1
+```
+
+Paso 2. Verifica la nueva IP y la ruta:
+
+```
+   ip a show <NOMBRE_INTERFAZ>
+   ip route show
+   ping -c 3 8.8.8.8` # Prueba la conectividad externa
+````
+
+
+### Tarea 3.  Restaurar a DHCP temporalmente:
+
+```
+    Libera la IP y solicita una nueva por DHCP:
+        sudo ip addr flush dev <NOMBRE_INTERFAZ> # Elimina todas las IPs de la interfaz 
+        sudo dhclient -r <NOMBRE_INTERFAZ> # Libera DHCP lease anterior (si aplicaba)
+        sudo dhclient <NOMBRE_INTERFAZ> # Solicita una nueva IP DHCP
+    Verifica la IP asignada por DHCP:
+        ip a show <NOMBRE_INTERFAZ>
+```
+
+
+### Tarea 4. Configuración Persistente con Netplan (Archivos .yaml):
+
+    Los cambios hechos con `ip` y `dhclient` son temporales y se perderán al reiniciar.
+    Netplan gestiona la configuración persistente. 
+
+Paso 1. Haz una **COPIA DE SEGURIDAD** de tu archivo `.yaml` actual:
+        `sudo cp /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml.bak`
+
+Paso 2. Edita el archivo `.yaml` para configurar una IP estática (ejemplo):
+
         ```yaml
         # ADAPTA ESTE EJEMPLO A TU INTERFAZ Y RED LOCAL
         network:
@@ -134,10 +151,13 @@ Al finalizar la práctica, serás capaz de:
                 addresses: [8.8.8.8, 8.8.4.4] # Servidores DNS (ej: Google DNS)
         ```
         * `sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml`
-    * Aplica la configuración de Netplan:
+        
+Paso 1. Aplica la configuración de Netplan:
         * `sudo netplan apply`
-    * Si hay errores, `netplan apply` los mostrará. [cite: 22] Corrígelos en el `.yaml`. [cite: 22]
-    * Verifica la nueva IP y la ruta persistentes:
+     
+Si hay errores, `netplan apply` los mostrará. Corrígelos en el `.yaml`. 
+
+Paso 2. Verifica la nueva IP y la ruta persistentes:
         * `ip a show <NOMBRE_INTERFAZ>`
         * `ip route show`
     * Para volver a DHCP de forma persistente (edita el archivo `.yaml` de nuevo):
@@ -156,47 +176,56 @@ Al finalizar la práctica, serás capaz de:
 
 ---
 
-### Laboratorio 3.3: Implementación de Subinterfaces (VLANs)
+# Práctica 3.3. Implementación de subinterfaces (VLANs)
 
-**Objetivos del Laboratorio:**
+## Objetivos de la práctica:
 
-* Comprender el concepto y la utilidad de las VLANs para la segmentación de red. [cite: 23]
-* Configurar una subinterfaz VLAN en una interfaz física existente. [cite: 23]
-* Asignar una dirección IP y verificar la configuración de la subinterfaz. [cite: 24]
+- Comprender el concepto y la utilidad de las VLANs para la segmentación de red. 
+- Configurar una subinterfaz VLAN en una interfaz física existente. 
+- Asignar una dirección IP y verificar la configuración de la subinterfaz. 
 
 **Prerrequisitos:**
 
-* Máquina Virtual (VM) de Ubuntu. Este laboratorio es complejo en hardware físico sin una configuración de switch gestionado. [cite: 25]
-* En una VM (ej. VirtualBox, VMware), la interfaz de red debe estar en modo "Adaptador Puente" o "Red Interna" y la configuración de la red virtualizada debe permitir el `tagging` de VLANs si quieres que sea realista con otros VMs/dispositivos. [cite: 26]
-* Para este laboratorio, la crearemos a nivel de SO, asumiendo que la capa inferior (switch/virtualizador) la soportaría. [cite: 26]
-* Paquete `vlan` instalado: `sudo apt install vlan`. [cite: 27]
+- Máquina Virtual (VM) de Ubuntu. Este laboratorio es complejo en hardware físico sin una configuración de switch gestionado. 
+- En una VM (ej. VirtualBox, VMware), la interfaz de red debe estar en modo "Adaptador Puente" o "Red Interna" y la configuración de la red virtualizada debe permitir el `tagging` de VLANs si quieres que sea realista con otros VMs/dispositivos. 
+- Para este laboratorio, la crearemos a nivel de SO, asumiendo que la capa inferior (switch/virtualizador) la soportaría. 
+- Paquete `vlan` instalado: `sudo apt install vlan`. 
 
-**Solución (Pasos):** [cite: 27]
+### Instrucciones
 
-1.  **Identifica tu interfaz física principal:**
+### Tarea 1.  Identifica tu interfaz física principal:
+    
     * `ip a`
-    * Toma nota del nombre de tu interfaz principal (ej., `enp0s3`, `ens33`). [cite: 28]
-    * Asegúrate de que no es `lo` (loopback). [cite: 28]
 
-2.  **Configura la subinterfaz VLAN (temporalmente):**
-    * Vamos a crear una subinterfaz para la VLAN ID 10. [cite: 29]
-    * Reemplaza `<NOMBRE_INTERFAZ>` con tu interfaz física. [cite: 29]
-    * `# Añade la subinterfaz VLAN con ID 10`
-    * `sudo ip link add link <NOMBRE_INTERFAZ> name <NOMBRE_INTERFAZ>.10 type vlan id 10`
-    * `# Levanta la subinterfaz`
-    * `sudo ip link set <NOMBRE_INTERFAZ>.10 up`
-    * `# Asigna una dirección IP a la subinterfaz (ej. en el rango 192.168.10.x/24)`
-    * `sudo ip addr add 192.168.10.1/24 dev <NOMBRE_INTERFAZ>.10`
+Paso 1. Toma nota del nombre de tu interfaz principal (ej., `enp0s3`, `ens33`). 
+Paso 2. Asegúrate de que no es `lo` (loopback). 
 
-3.  **Verifica la nueva subinterfaz y su dirección IP:**
+### Tarea 2.  Configura la subinterfaz VLAN (temporalmente):
+
+Paso 1. Crea una subinterfaz para la VLAN ID 10. 
+Paso 2. Reemplaza `<NOMBRE_INTERFAZ>` con tu interfaz física. 
+
+```
+    # Añade la subinterfaz VLAN con ID 10
+    sudo ip link add link <NOMBRE_INTERFAZ> name <NOMBRE_INTERFAZ>.10 type vlan id 10
+    # Levanta la subinterfaz
+    sudo ip link set <NOMBRE_INTERFAZ>.10 up
+    # Asigna una dirección IP a la subinterfaz (ej. en el rango 192.168.10.x/24)
+    sudo ip addr add 192.168.10.1/24 dev <NOMBRE_INTERFAZ>.10
+
+```
+
+### Tarea 3. Verifica la nueva subinterfaz y su dirección IP:
     * `ip a show <NOMBRE_INTERFAZ>.10`
 
-4.  **Configuración Persistente de Subinterfaz (Netplan):**
-    * Los cambios anteriores son temporales. [cite: 30]
-    * Para hacerlos persistentes, edita tu archivo Netplan. [cite: 30]
-    * Haz una **COPIA DE SEGURIDAD** de tu archivo `.yaml` actual:
+### Tarea 4. Configuración Persistente de Subinterfaz (Netplan):
+
+Los cambios anteriores son temporales, para hacerlos persistentes, edita tu archivo Netplan.
+    
+Paso 1. Haz una **COPIA DE SEGURIDAD** de tu archivo `.yaml` actual:
         * `sudo cp /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml.bak`
-    * Edita el archivo `.yaml` para añadir la VLAN (ejemplo):
+
+Paso 2. Edita el archivo `.yaml` para añadir la VLAN (ejemplo):
         ```yaml
         # ADAPTA ESTE EJEMPLO A TU INTERFAZ Y RED LOCAL
         network:
@@ -210,7 +239,7 @@ Al finalizar la práctica, serás capaz de:
           vlans:
             <NOMBRE_INTERFAZ>.10: # Nombre de la subinterfaz VLAN (ej. enp0s3.10)
               id: 10 # El ID de la VLAN
-              link: <NOMBRE_INTERFAZ> # La interfaz física a la que se asocia [cite: 31]
+              link: <NOMBRE_INTERFAZ> # La interfaz física a la que se asocia
               dhcp4: no # La VLAN tendrá IP estática
               addresses: [192.168.10.1/24] # IP para esta VLAN
               # routes: # Opcional: Rutas específicas para esta VLAN
@@ -219,161 +248,209 @@ Al finalizar la práctica, serás capaz de:
               nameservers:
                 addresses: [8.8.8.8] # DNS para esta VLAN
         ```
+        
         * `sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml`
-    * Aplica la configuración de Netplan:
+   
+Paso 3. Aplica la configuración de Netplan:
         * `sudo netplan apply`
-    * Si hay errores, corrígelos en el `.yaml`. [cite: 32]
-    * Verifica la subinterfaz después de aplicar Netplan:
+   
+    * Si hay errores, corrígelos en el `.yaml`.
+
+Paso 4. Verifica la subinterfaz después de aplicar Netplan:
         * `ip a show <NOMBRE_INTERFAZ>.10`
 
-5.  **Prueba la conectividad (requiere otro dispositivo en la misma VLAN):**
-    * Si tienes otra VM o un dispositivo físico configurado en la misma VLAN (ID 10) y segmento de red (ej., 192.168.10.x), intenta hacer ping a su dirección IP desde esta VM:
+### Tarea 5. Prueba la conectividad (requiere otro dispositivo en la misma VLAN):
+
+Si tienes otra VM o un dispositivo físico configurado en la misma VLAN (ID 10) y segmento de red (ej., 192.168.10.x), intenta hacer ping a su dirección IP desde esta VM:
         * `ping -c 3 192.168.10.X` # Reemplaza con la IP del otro dispositivo en la VLAN
 
-6.  **Limpia la configuración de VLAN (después del laboratorio):**
-    * Edita tu archivo `.yaml` de Netplan y elimina la sección `vlans:` correspondiente a `<NOMBRE_INTERFAZ>.10`. [cite: 33]
+### Tarea 6.  Limpia la configuración de VLAN (después del laboratorio):
+
+Paso 1. Edita tu archivo `.yaml` de Netplan y elimina la sección `vlans:` correspondiente a `<NOMBRE_INTERFAZ>.10`. 
     * `sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml`
-    * Aplica la configuración modificada:
+
+Paso 2. Aplica la configuración modificada:
         * `sudo netplan apply`
-    * Verifica que la subinterfaz ya no existe:
+
+Paso 3. Verifica que la subinterfaz ya no existe:
         * `ip a show <NOMBRE_INTERFAZ>.10` # Debería decir "Does not exist"
 
 ---
 
-### Laboratorio 3.4: Configuración Básica del Firewall UFW
+# Laboratorio 3.4: Configuración básica del firewall UFW
 
-**Objetivos del Laboratorio:**
+## Objetivos de la práctica:
 
-* Habilitar y deshabilitar el firewall UFW. [cite: 34]
-* Establecer las políticas por defecto de UFW para el tráfico entrante y saliente. [cite: 35]
-* Permitir y denegar conexiones por puerto y por servicio. [cite: 35]
-* Gestionar y restablecer las reglas del firewall. [cite: 36]
+- Habilitar y deshabilitar el firewall UFW. 
+- Establecer las políticas por defecto de UFW para el tráfico entrante y saliente. 
+- Permitir y denegar conexiones por puerto y por servicio.
+- Gestionar y restablecer las reglas del firewall. 
 
 **Prerrequisitos:**
 
-* Acceso a tu máquina Ubuntu (se recomienda VM para practicar sin afectar tu máquina principal). [cite: 37]
-* **IMPORTANTE:** Si te conectas a la VM por SSH, **ASEGÚRATE** de añadir una regla para permitir el puerto SSH (22) **ANTES** de habilitar el firewall, o te bloquearás a ti mismo. [cite: 38]
+- Acceso a tu máquina Ubuntu (se recomienda VM para practicar sin afectar tu máquina principal). 
 
-**Solución (Pasos):** [cite: 38]
+> **IMPORTANTE:** Si te conectas a la VM por SSH, **ASEGÚRATE** de añadir una regla para permitir el puerto SSH (22) **ANTES** de habilitar el firewall, o te bloquearás a ti mismo. 
 
-1.  **Verificar el estado inicial de UFW:**
+### Instrucciones:
+
+### Tarea 1.  Verificar el estado inicial de UFW:
     * `sudo ufw status verbose`
-    * Lo más probable es que esté `inactive` o `active` con reglas predeterminadas. [cite: 39]
+    * Lo más probable es que esté `inactive` o `active` con reglas predeterminadas. 
 
-2.  **Establecer políticas por defecto de UFW:**
-    * Establece la política por defecto para denegar todo el tráfico entrante y permitir todo el tráfico saliente (recomendado para seguridad). [cite: 40]
+### Tarea 2. Establecer políticas por defecto de UFW:
+
+Paso 1 Establece la política por defecto para denegar todo el tráfico entrante y permitir todo el tráfico saliente (recomendado para seguridad).
     * `sudo ufw default deny incoming`
     * `sudo ufw default allow outgoing`
-    * Verifica las políticas aplicadas:
+
+Paso 2. Verifica las políticas aplicadas:
         * `sudo ufw status verbose`
 
-3.  **Permitir el tráfico esencial (SSH):**
-    * **¡Paso Crítico para conexiones SSH!** Permite el puerto 22 (SSH) para no perder el acceso remoto. [cite: 41]
+### Tarea 3. Permitir el tráfico esencial (SSH):
+
+> *¡Paso Crítico para conexiones SSH!
+
+Paso 1. Permite el puerto 22 (SSH) para no perder el acceso remoto. 
     * `sudo ufw allow ssh` # UFW reconoce el servicio 'ssh' y lo asocia al puerto 22/tcp
     * `# O de forma explícita: sudo ufw allow 22/tcp`
-    * Verifica que la regla se añadió:
+
+Paso 2.  Verifica que la regla se añadió:
         * `sudo ufw status verbose`
 
-4.  **Habilitar el firewall UFW:**
+### Tarea 4.  Habilitar el firewall UFW:
+
     * `sudo ufw enable`
-    * Se te preguntará si estás seguro. [cite: 42] Confirma con `y`. [cite: 42]
-    * Verifica que UFW está activo:
+Paso 1. Se te preguntará si estás seguro. Confirma con `y`.
+
+Paso 2. Verifica que UFW está activo:
         * `sudo ufw status verbose` # Debería mostrar 'Status: active'
 
-5.  **Añadir reglas para otros servicios comunes:**
-    * Permite el tráfico web (puertos 80 para HTTP y 443 para HTTPS):
+### Tarea 5. Añadir reglas para otros servicios comunes:
+    
+Paso 1. Permite el tráfico web (puertos 80 para HTTP y 443 para HTTPS):
         * `sudo ufw allow http`
         * `sudo ufw allow https`
         * `sudo ufw status verbose`
-    * Permite un puerto no estándar específico (ej., puerto 8080 para una aplicación web):
+
+Paso 2. Permite un puerto no estándar específico (ej., puerto 8080 para una aplicación web):
         * `sudo ufw allow 8080/tcp`
         * `sudo ufw status verbose`
 
-6.  **Denegar tráfico explícitamente:**
+### Tarea 6. Denegar tráfico explícitamente:
     * Denegar un puerto inseguro como Telnet (puerto 23):
         * `sudo ufw deny 23/tcp`
         * `sudo ufw status verbose`
 
-7.  **Probar las reglas del firewall:**
-    * **Desde otra máquina:**
-        * Si tienes un servidor web (Apache/Nginx) instalado y corriendo en tu VM, intenta acceder a él desde un navegador. [cite: 43] Debería funcionar (puertos 80/443 abiertos). [cite: 43]
-        * Intenta conectar al puerto 23 de tu VM (Telnet) desde otra máquina (ej., usando `telnet <IP_DE_TU_UBUNTU> 23`). [cite: 44] Debería fallar (conexión denegada). [cite: 44]
-    * **Desde la misma VM (para verificar el tráfico saliente):**
-        * Intenta hacer un ping a un sitio web (debería funcionar, ya que el tráfico saliente está permitido): `ping -c 3 google.com`
+### Tarea 7. Probar las reglas del firewall:
+    * *Desde otra máquina:*
 
-8.  **Gestionar y restablecer las reglas del firewall (después del laboratorio):**
-    * Lista las reglas con números para facilitar su eliminación:
+Paso 1. Si tienes un servidor web (Apache/Nginx) instalado y corriendo en tu VM, intenta acceder a él desde un navegador. Debería funcionar (puertos 80/443 abiertos). 
+
+Paso 2. Intenta conectar al puerto 23 de tu VM (Telnet) desde otra máquina (ej., usando `telnet <IP_DE_TU_UBUNTU> 23`). Debería fallar (conexión denegada).
+
+Desde la misma VM (para verificar el tráfico saliente):
+
+Paso 3. Intenta hacer un ping a un sitio web (debería funcionar, ya que el tráfico saliente está permitido): `ping -c 3 google.com`
+
+### Tarea 8. Gestionar y restablecer las reglas del firewall (después del laboratorio):
+
+Paso 1. Lista las reglas con números para facilitar su eliminación:
         * `sudo ufw status numbered`
-    * Borra una regla específica por su número (ej., si la regla de Telnet es la número 3):
+
+Paso 2. Borra una regla específica por su número (ej., si la regla de Telnet es la número 3):
         * `sudo ufw delete 3`
-    * Restablecer UFW a su estado predeterminado (elimina todas las reglas añadidas):
+
+Paso 3. Restablecer UFW a su estado predeterminado (elimina todas las reglas añadidas):
         * `sudo ufw reset`
-    * Esto te preguntará si estás seguro. [cite: 45] Confirma con `y`. [cite: 45]
-    * Esto dejará UFW deshabilitado si no lo habilitaste después de reset. [cite: 46]
-    * Deshabilitar UFW completamente:
+
+Paso 4. Esto te preguntará si estás seguro. Confirma con `y`. 
+    * Esto dejará UFW deshabilitado si no lo habilitaste después de reset. 
+
+Paso 5. Deshabilitar UFW completamente:
         * `sudo ufw disable`
 
 ---
 
-### Laboratorio 3.5: Análisis Básico de Tráfico de Red con tcpdump
+# Práctica 3.5. Análisis básico de tráfico de red con tcpdump
 
-**Objetivos del Laboratorio:**
+## Objetivos de la práctica:
 
-* Instalar y utilizar la herramienta `tcpdump` para capturar tráfico de red. [cite: 47]
-* Aplicar filtros para capturar tráfico específico (por host, puerto, protocolo). [cite: 47]
-* Guardar y leer capturas de tráfico en formato `.pcap`. [cite: 48]
-* Comprender cómo `tcpdump` puede ayudar en el diagnóstico de problemas de red. [cite: 48]
+- Instalar y utilizar la herramienta `tcpdump` para capturar tráfico de red. 
+- Aplicar filtros para capturar tráfico específico (por host, puerto, protocolo). 
+- Guardar y leer capturas de tráfico en formato `.pcap`.
+- Comprender cómo `tcpdump` puede ayudar en el diagnóstico de problemas de red. 
 
 **Prerrequisitos:**
 
-* Paquete `tcpdump` instalado: `sudo apt install tcpdump`. [cite: 49]
-* Un entorno donde puedas generar tráfico de red (ej. otra terminal para `ping`, un navegador web, un servidor web). [cite: 50]
+- Paquete `tcpdump` instalado: `sudo apt install tcpdump`.
+- Un entorno donde puedas generar tráfico de red (ej. otra terminal para `ping`, un navegador web, un servidor web). 
 
-**Solución (Pasos):** [cite: 50]
+### Instrucciones:
 
-1.  **Identifica tu interfaz de red principal:**
-    * Necesitarás saber qué interfaz está manejando tu tráfico (ej., `enp0s3`, `eth0`, `wlan0`). [cite: 51]
+### Tarea 1.  Identifica tu interfaz de red principal:
+
+Paso 1. Necesitarás saber qué interfaz está manejando tu tráfico (ej., `enp0s3`, `eth0`, `wlan0`).
     * `ip a show`
     * `# O para listar interfaces que tcpdump puede ver:`
     * `sudo tcpdump -D`
-    * Toma nota del nombre de tu interfaz (usaremos `<NOMBRE_INTERFAZ>` en los ejemplos). [cite: 52]
 
-2.  **Captura todo el tráfico en una interfaz (interrumpe con Ctrl+C):**
-    * Esto mostrará todos los paquetes que pasan por la interfaz. [cite: 53]
-    * Observa las direcciones IP, puertos y protocolos. [cite: 53]
+Paso 2. Toma nota del nombre de tu interfaz (usaremos `<NOMBRE_INTERFAZ>` en los ejemplos). 
+
+### Tarea 2. Captura todo el tráfico en una interfaz (interrumpe con Ctrl+C):
+Esto mostrará todos los paquetes que pasan por la interfaz.
+
+Observa las direcciones IP, puertos y protocolos.
     * `sudo tcpdump -i <NOMBRE_INTERFAZ>`
 
-3.  **Filtra el tráfico por host:**
-    * Captura solo el tráfico hacia/desde una dirección IP específica (ej., `8.8.8.8` - Google DNS):
-        * `sudo tcpdump -i <NOMBRE_INTERFAZ> host 8.8.8.8`
-    * Mientras este comando está corriendo en una terminal, en otra terminal, genera tráfico:
-        * Haz un `ping -c 3 8.8.8.8` para ver los paquetes ICMP. [cite: 54]
-        * Haz un `dig google.com @8.8.8.8` para ver los paquetes DNS. [cite: 54]
-    * Observa cómo `tcpdump` solo muestra el tráfico relacionado con `8.8.8.8`. [cite: 55]
 
-4.  **Filtra el tráfico por puerto:**
-    * Captura solo el tráfico HTTP (puerto 80). [cite: 56]
-    * Si tienes un servidor web en tu VM, accede a él desde un navegador en otra máquina. [cite: 57]
-    * `sudo tcpdump -i <NOMBRE_INTERFAZ> port 80`
-    * Captura solo el tráfico SSH (puerto 22). [cite: 58]
-    * Si te conectas por SSH, abre una nueva sesión SSH a tu VM. [cite: 59]
+### Tarea 3. Filtra el tráfico por host:
+
+Paso 1. Captura solo el tráfico hacia/desde una dirección IP específica (ej., `8.8.8.8` - Google DNS):
+     
+        * `sudo tcpdump -i <NOMBRE_INTERFAZ> host 8.8.8.8`
+Mientras este comando está corriendo en una terminal, en otra terminal, genera tráfico:
+
+Paso 2. Haz un `ping -c 3 8.8.8.8` para ver los paquetes ICMP. 
+
+Paso 3. Haz un `dig google.com @8.8.8.8` para ver los paquetes DNS. 
+
+Paso 4. Observa cómo `tcpdump` solo muestra el tráfico relacionado con `8.8.8.8`. 
+
+### Tarea 4. Filtra el tráfico por puerto:
+
+Paso 1. Captura solo el tráfico HTTP (puerto 80). 
+
+Paso 2. Si tienes un servidor web en tu VM, accede a él desde un navegador en otra máquina. 
+     `sudo tcpdump -i <NOMBRE_INTERFAZ> port 80`
+
+Paso 3. Captura solo el tráfico SSH (puerto 22). 
+
+Paso 4. Si te conectas por SSH, abre una nueva sesión SSH a tu VM. 
     * `sudo tcpdump -i <NOMBRE_INTERFAZ> port 22`
 
-5.  **Filtra el tráfico por protocolo:**
-    * Captura solo el tráfico ICMP (usado por `ping`):
-        * `sudo tcpdump -i <NOMBRE_INTERFAZ> icmp`
-    * Mientras corre, haz un `ping localhost` o `ping 8.8.8.8` en otra terminal. [cite: 60]
-    * Captura solo el tráfico DNS (usado por `dig`). DNS utiliza UDP en el puerto 53: [cite: 61]
-        * `sudo tcpdump -i <NOMBRE_INTERFAZ> udp port 53`
-    * Mientras corre, haz un `dig example.com` en otra terminal. [cite: 61]
+### Tarea 5. Filtra el tráfico por protocolo:
 
-6.  **Guardar y leer capturas de tráfico:**
-    * Guarda una captura en un archivo `.pcap` (útil para análisis posterior o para abrir con Wireshark). [cite: 62]
-    * Captura 100 paquetes (`-c 100`) y guárdalos en `mi_captura.pcap`:
+Paso 1. Captura solo el tráfico ICMP (usado por `ping`):
+         `sudo tcpdump -i <NOMBRE_INTERFAZ> icmp`
+
+Paso 2. Mientras corre, haz un `ping localhost` o `ping 8.8.8.8` en otra terminal.
+
+Paso 3. Captura solo el tráfico DNS (usado por `dig`). DNS utiliza UDP en el puerto 53: 
+        * `sudo tcpdump -i <NOMBRE_INTERFAZ> udp port 53`
+
+Paso 4. Mientras corre, haz un `dig example.com` en otra terminal. 
+
+### Tarea 6.  Guardar y leer capturas de tráfico:
+
+Paso 1. Guarda una captura en un archivo `.pcap` (útil para análisis posterior o para abrir con Wireshark).
+
+Paso 2. Captura 100 paquetes (`-c 100`) y guárdalos en `mi_captura.pcap`:
         * `sudo tcpdump -i <NOMBRE_INTERFAZ> -w mi_captura.pcap -c 100`
-    * Lee el contenido del archivo `.pcap` que acabas de crear:
+
+Paso 3. Lee el contenido del archivo `.pcap` que acabas de crear:
         * `sudo tcpdump -r mi_captura.pcap`
 
-7.  **Limpia (elimina el archivo de captura):**
+### Tarea 7. Limpia (elimina el archivo de captura):
     * `rm mi_captura.pcap`
 
