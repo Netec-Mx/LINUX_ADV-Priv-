@@ -334,7 +334,7 @@ Fail2Ban monitoreará automáticamente los logs de SSH y bloqueará IPs con inte
 
 Se te advertirá que esto puede interrumpir conexiones SSH. Confirma con `y`.
 
-## Tarea 4. Verifica el estado del firewall
+### Tarea 4. Verifica el estado del firewall
 
     ```bash
     sudo ufw status verbose
