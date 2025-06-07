@@ -165,7 +165,7 @@ Paso 3. Vuelve a cambiar el propietario y grupo a tu usuario: `sudo chown tu_usu
 
 <br/>
 
-### Práctica 1.5. Gestión de procesos
+# Práctica 1.5. Gestión de procesos
 
 ### Objetivo de la práctica: 
 - Aprender a listar, monitorear y terminar procesos en Linux.
