@@ -227,33 +227,35 @@ Verás todas las instancias donde se ha utilizado el comando `sudo` y por qué u
 
 ---
 
-## Laboratorio 6.4: Hardening Básico del Sistema
+# Práctica 6.4. Hardening básico del sistema
 
 Este laboratorio se enfoca en asegurar aspectos clave como SSH y la configuración del kernel.
 
-### Objetivo:
+## Objetivo de la práctica:
 
-Aplicar medidas básicas de **endurecimiento** a SSH y al kernel.
+- Aplicar medidas básicas de **endurecimiento** a SSH y al kernel.
 
----
+### Instrucciones
 
 ### Hardening de SSH
 
-1.  **Haz una copia de seguridad del archivo de configuración SSH.**
-    Siempre haz una copia de seguridad antes de modificar archivos de configuración críticos.
+### Tarea 1. Haz una copia de seguridad del archivo de configuración SSH
+
+Siempre haz una copia de seguridad antes de modificar archivos de configuración críticos.
 
     ```bash
     sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
     ```
 
-2.  **Edita el archivo de configuración SSH.**
-    Vamos a cambiar el puerto, deshabilitar la autenticación con contraseña y el acceso directo de root.
+### Tarea 2. Edita el archivo de configuración SSH
+
+Vamos a cambiar el puerto, deshabilitar la autenticación con contraseña y el acceso directo de root.
 
     ```bash
     sudo nano /etc/ssh/sshd_config
     ```
 
-    Dentro del editor, busca y modifica/añade las siguientes líneas:
+Paso 1. Dentro del editor, busca y modifica/añade las siguientes líneas:
 
     ```ini
     # Cambia el puerto 22 por uno diferente, por ejemplo 2222
@@ -270,18 +272,19 @@ Aplicar medidas básicas de **endurecimiento** a SSH y al kernel.
     # AllowUsers tu_usuario_principal
     ```
 
-    Guarda los cambios (`Ctrl+O`, `Enter`) y sal (`Ctrl+X`).
+Paso 2. Guarda los cambios (`Ctrl+O`, `Enter`) y sal (`Ctrl+X`).
 
-3.  **Reinicia el servicio SSH.**
+### Tarea 3. Reinicia el servicio SSH
 
     ```bash
     sudo systemctl restart sshd
     ```
 
-    Si tienes una sesión SSH activa, no la cierres todavía por si algo salió mal. Abre una nueva terminal e intenta conectarte usando el nuevo puerto.
+Si tienes una sesión SSH activa, no la cierres todavía por si algo salió mal. Abre una nueva terminal e intenta conectarte usando el nuevo puerto.
 
-4.  **Prueba la nueva configuración SSH.**
-    Abre una nueva terminal (o desde otra máquina) e intenta conectarte:
+### Tarea 4. Prueba la nueva configuración SSH
+
+Abre una nueva terminal (o desde otra máquina) e intenta conectarte:
 
     ```bash
     ssh tu_usuario@localhost -p 2222 # Si estás en la misma máquina
@@ -289,9 +292,10 @@ Aplicar medidas básicas de **endurecimiento** a SSH y al kernel.
     ssh tu_usuario@IP_del_servidor -p 2222
     ```
 
-    Si la conexión es exitosa, ¡felicidades! Has endurecido SSH. Si falla, revisa `/var/log/auth.log` para ver el error y los cambios en `sshd_config.bak` para revertir si es necesario.
+Si la conexión es exitosa, ¡felicidades! Has endurecido SSH. 
+Si falla, revisa `/var/log/auth.log` para ver el error y los cambios en `sshd_config.bak` para revertir si es necesario.
 
-5.  **Instala y habilita Fail2Ban (opcional, pero muy recomendado).**
+### Tarea 5. Instala y habilita Fail2Ban (opcional, pero muy recomendado)
 
     ```bash
     sudo apt install fail2ban
@@ -300,20 +304,20 @@ Aplicar medidas básicas de **endurecimiento** a SSH y al kernel.
     sudo systemctl status fail2ban # Verifica que esté corriendo
     ```
 
-    Fail2Ban monitoreará automáticamente los logs de SSH y bloqueará IPs con intentos fallidos.
+Fail2Ban monitoreará automáticamente los logs de SSH y bloqueará IPs con intentos fallidos.
 
 ---
 
-### 6.5: Configuración del Firewall (UFW)
+### Configuración del Firewall (UFW)
 
-1.  **Deniega todo el tráfico entrante por defecto y permite el saliente.**
+### Tarea 1. Deniega todo el tráfico entrante por defecto y permite el saliente
 
     ```bash
     sudo ufw default deny incoming
     sudo ufw default allow outgoing
     ```
 
-2.  **Permite los servicios necesarios (SSH y otros).**
+### Tarea 2. Permite los servicios necesarios (SSH y otros)
 
     ```bash
     sudo ufw allow 2222/tcp # Asegúrate de usar el puerto SSH que configuraste antes
@@ -322,39 +326,39 @@ Aplicar medidas básicas de **endurecimiento** a SSH y al kernel.
     # sudo ufw allow https
     ```
 
-3.  **Habilita UFW.**
+### Tarea 3. Habilita UFW
 
     ```bash
     sudo ufw enable
     ```
 
-    Se te advertirá que esto puede interrumpir conexiones SSH. Confirma con `y`.
+Se te advertirá que esto puede interrumpir conexiones SSH. Confirma con `y`.
 
-4.  **Verifica el estado del firewall.**
+## Tarea 4. Verifica el estado del firewall
 
     ```bash
     sudo ufw status verbose
     ```
 
-    Deberías ver que UFW está activo y las reglas que definiste.
+Deberías ver que UFW está activo y las reglas que definiste.
 
 ---
 
-### 6.6: Parámetros del Kernel (`sysctl`)
+### Parámetros del Kernel (sysctl)
 
-1.  **Haz una copia de seguridad del archivo `sysctl.conf`.**
+### Tarea 1. Haz una copia de seguridad del archivo `sysctl.conf`
 
     ```bash
     sudo cp /etc/sysctl.conf /etc/sysctl.conf.bak
     ```
 
-2.  **Edita el archivo de configuración del kernel.**
+### Tarea 2. Edita el archivo de configuración del kernel
 
     ```bash
     sudo nano /etc/sysctl.conf
     ```
 
-    Añade las siguientes líneas al final del archivo. Estas son algunas recomendaciones comunes de seguridad:
+Añade las siguientes líneas al final del archivo. Estas son algunas recomendaciones comunes de seguridad:
 
     ```ini
     # Protección contra ataques SYN-Flood
@@ -385,9 +389,9 @@ Aplicar medidas básicas de **endurecimiento** a SSH y al kernel.
     net.ipv6.conf.all.forwarding = 0
     ```
 
-    Guarda los cambios (`Ctrl+O`, `Enter`) y sal (`Ctrl+X`).
+Guarda los cambios (`Ctrl+O`, `Enter`) y sal (`Ctrl+X`).
 
-3.  **Aplica los cambios del kernel.**
+### Tarea 3. Aplica los cambios del kernel
 
     ```bash
     sudo sysctl -p
