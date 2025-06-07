@@ -160,8 +160,10 @@ Si hay errores, `netplan apply` los mostrará. Corrígelos en el `.yaml`.
 Paso 2. Verifica la nueva IP y la ruta persistentes:
         * `ip a show <NOMBRE_INTERFAZ>`
         * `ip route show`
-    * Para volver a DHCP de forma persistente (edita el archivo `.yaml` de nuevo):
-        ```yaml
+        
+Paso 3. Para volver a DHCP de forma persistente (edita el archivo `.yaml` de nuevo):
+
+```
         network:
           version: 2
           renderer: networkd
@@ -169,10 +171,11 @@ Paso 2. Verifica la nueva IP y la ruta persistentes:
             <NOMBRE_INTERFAZ>:
               dhcp4: yes # Habilita DHCP para IPv4
               # Elimina las líneas 'addresses', 'routes', 'nameservers' que añadiste para estática
-        ```
-        * `sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml`
+        
+        * `sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.
         * `sudo netplan apply`
         * `ip a show <NOMBRE_INTERFAZ>` # Confirma que obtuviste una IP DHCP
+```
 
 ---
 
