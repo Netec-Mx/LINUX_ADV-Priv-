@@ -9,25 +9,25 @@
 
 Antes de comenzar, asegúrate de que tu máquina Ubuntu tenga acceso a Internet y los paquetes necesarios estén instalados:
 
-**Actualizar el sistema (si no se ha hecho anteriormente):**
+### Actualizar el sistema (si no se ha hecho anteriormente)
 
     ```bash
     sudo apt update
     sudo apt upgrade -y
     ```
 
-**Instalar herramientas adicionales:**
+### Instalar herramientas adicionales
 
     ```bash
     sudo apt install htop sysstat iotop ncdu -y
     ```
 
-     * **htop:** Alternativa a `top` con más funciones interactivas.
-    * **sysstat:** Proporciona `iostat` para estadísticas de I/O de disco.
-    * **iotop:** Monitoriza la I/O de disco por proceso.
-    * **ncdu:** Herramienta interactiva para analizar el uso de disco.
+- **htop:** Alternativa a `top` con más funciones interactivas.
+- **sysstat:** Proporciona `iostat` para estadísticas de I/O de disco.
+- **iotop:** Monitoriza la I/O de disco por proceso.
+- **ncdu:** Herramienta interactiva para analizar el uso de disco.
 
-**Herramientas a utilizar:** `top`, `htop`, `stress-ng`, `iostat`, `iotop`, `free`.
+- **Herramientas a utilizar:** `top`, `htop`, `stress-ng`, `iostat`, `iotop`, `free`.
 
 
 ### Preparación de la práctica 7.1.
@@ -99,7 +99,7 @@ Paso 5. **Espera a que stress-ng termine (o cancelalo):** Observa cómo la memor
 
 ### Tarea 7. Diagnóstico de cuello de botella en I/O de disco
 
-Paso 1. En una terminal, ejecutar iostat -x 1.
+Paso 1. En una terminal, ejecuta iostat -x 1.
 
     ```bash
     iostat -x 1
@@ -240,7 +240,7 @@ Esto puede liberar espacio si hay paquetes instalados como dependencias que ya n
 
 ### Preparación del laboratorio 
 
-* **Generar actividad en el log de autenticación:** Vamos a intentar iniciar sesión con un usuario inexistente varias veces para generar entradas "Failed password" en `/var/log/auth.log`.
+- **Generar actividad en el log de autenticación:** Vamos a intentar iniciar sesión con un usuario inexistente varias veces para generar entradas "Failed password" en `/var/log/auth.log`.
 
     ```bash
     ssh nonexistent_user@localhost
@@ -252,17 +252,18 @@ Luego, inicia sesión con tu propio usuario o `exit` de la máquina si estás us
 
 ### Instrucciones
 
-#### Filtrado básico con grep
+### Filtrado básico con grep
 
-* **Buscar intentos de inicio de sesión fallidos:**
+### Tarea 1. Buscar intentos de inicio de sesión fallidos
 
     ```bash
     grep "Failed password" /var/log/auth.log
     ```
 
-    Deberías ver las líneas de los intentos fallidos que generaste.
+Deberías ver las líneas de los intentos fallidos que generaste.
 
-* **Buscar errores en los logs de Apache/Nginx (si están instalados):** Si tienes Apache o Nginx instalados, puedes revisar sus logs de error:
+### Tarea 2. Buscar errores en los logs de Apache/Nginx (si están instalados)
+- Si tienes Apache o Nginx instalados, puedes revisar sus logs de error:
 
     ```bash
     grep -i "error" /var/log/apache2/error.log  # Para Apache
@@ -270,7 +271,7 @@ Luego, inicia sesión con tu propio usuario o `exit` de la máquina si estás us
     grep -i "error" /var/log/nginx/error.log    # Para Nginx
     ```
 
-* **Mostrar líneas de log relacionadas con la red:**
+### Tarea 3. Mostrar líneas de log relacionadas con la red
 
     ```bash
     grep -i "network" /var/log/syslog | tail -n 10
@@ -278,9 +279,9 @@ Luego, inicia sesión con tu propio usuario o `exit` de la máquina si estás us
 
     Esto mostrará las últimas 10 líneas de syslog que contienen la palabra "network" (ignorando mayúsculas/minúsculas).
 
-#### 7.3.2 Análisis Avanzado con Pipes (|)
+### Tarea 4. Análisis avanzado con pipes (|)
 
-* **Identificar las IPs que más fallaron en el login:** Este es un ejemplo clásico de análisis de seguridad.
+Paso 1. **Identificar las IPs que más fallaron en el login:** Este es un ejemplo clásico de análisis de seguridad.
 
     ```bash
     grep "Failed password" /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -nr | head -n 5
@@ -293,135 +294,140 @@ Luego, inicia sesión con tu propio usuario o `exit` de la máquina si estás us
     * `sort -nr`: Ordena numéricamente en orden descendente.
     * `head -n 5`: Muestra las 5 IPs con más intentos fallidos.
 
-* **Contar ocurrencias de un patrón en logs comprimidos (zgrep):** Busca cuántas veces se menciona "error" en todos los logs de syslog (incluidos los comprimidos).
+Paso 2. **Contar ocurrencias de un patrón en logs comprimidos (zgrep):** Busca cuántas veces se menciona "error" en todos los logs de syslog (incluidos los comprimidos).
 
     ```bash
     zgrep -c "error" /var/log/syslog*
     ```
 
-* **Monitoreo en tiempo real de nuevas conexiones SSH:** Abre una terminal y ejecuta:
+Paso 3. **Monitoreo en tiempo real de nuevas conexiones SSH:** Abre una terminal y ejecuta:
 
     ```bash
     tail -f /var/log/auth.log | grep --line-buffered "Accepted password"
     ```
 
-    * `--line-buffered`: Asegura que `grep` procese la entrada línea por línea, lo cual es importante con `tail -f`.
-    * En una segunda terminal, intenta iniciar sesión en tu máquina Ubuntu vía SSH (ej. `ssh your_user@localhost`). Verás el mensaje "Accepted password" aparecer en la primera terminal.
+- `--line-buffered`: Asegura que `grep` procese la entrada línea por línea, lo cual es importante con `tail -f`.
 
-#### 7.3.3 Uso de journalctl para Análisis de Logs
+Paso 4. En una segunda terminal, intenta iniciar sesión en tu máquina Ubuntu vía SSH (ej. `ssh your_user@localhost`). Verás el mensaje "Accepted password" aparecer en la primera terminal.
 
-* **Ver los últimos 200 mensajes del journal:**
+#### Uso de journalctl para Análisis de Logs
+
+### Tarea 1. Ver los últimos 200 mensajes del journal
 
     ```bash
     sudo journalctl -n 200 | less
     ```
 
-* **Ver logs de un servicio específico (ej. ssh.service):**
+### Tarea 2. Ver logs de un servicio específico (ej. ssh.service)
 
     ```bash
     sudo journalctl -u ssh.service | less
     ```
 
-* **Filtrar logs del kernel por prioridad de error:**
+### Tarea 3. Filtrar logs del kernel por prioridad de error
 
     ```bash
     sudo journalctl -k -p err | less
     ```
 
-    Esto mostrará solo los mensajes del kernel con nivel de error o superior.
+Esto mostrará solo los mensajes del kernel con nivel de error o superior.
 
-* **Ver logs de un arranque anterior (si el sistema se reinició):**
+### Tarea 4. Ver logs de un arranque anterior (si el sistema se reinició)
 
     ```bash
     sudo journalctl -b -1 | less
     ```
 
-    Esto muestra los logs del arranque anterior. Si no hay un arranque anterior (ej. primera vez que el sistema se reinicia), puede que no muestre nada.
+Esto muestra los logs del arranque anterior. Si no hay un arranque anterior (ej. primera vez que el sistema se reinicia), puede que no muestre nada.
 
 ---
 
-## Laboratorio 7.4: Revisión de errores del sistema (dmesg, kernel logs, etc)
+# Práctica 7.4. Revisión de errores del sistema (dmesg, kernel logs, etc.)
 
-**Objetivo:** Aprender a usar `dmesg` y `journalctl` para diagnosticar problemas a nivel de kernel y hardware.
+## Objetivo de la práctica: 
+
+- Aprender a usar `dmesg` y `journalctl` para diagnosticar problemas a nivel de kernel y hardware.
+
 **Herramientas a utilizar:** `dmesg`, `journalctl`.
 
-### Pasos del Laboratorio 7.4
+### Explorando dmesg
 
-#### 7.4.1 Explorando dmesg
-
-* **Ver el buffer completo de dmesg con marcas de tiempo legibles:**
+### Tarea 1. Ver el buffer completo de dmesg con marcas de tiempo legibles
 
     ```bash
     sudo dmesg -T | less
     ```
 
-    Navega por la salida. Busca líneas que mencionen la detección de CPU, memoria, discos, interfaces de red. Esto te da una idea del hardware detectado al arranque.
+Navega por la salida. Busca líneas que mencionen la detección de CPU, memoria, discos, interfaces de red. Esto te da una idea del hardware detectado al arranque.
 
-* **Filtrar mensajes de dmesg por nivel de error y advertencia:**
+### Tarea 2. Filtrar mensajes de dmesg por nivel de error y advertencia
 
     ```bash
     sudo dmesg -T -l err,warn | less
     ```
 
-    Esta es la forma más rápida de ver problemas potenciales. Si el sistema está sano, es posible que no veas muchos (o ningún) mensaje aquí.
+Esta es la forma más rápida de ver problemas potenciales. Si el sistema está sano, es posible que no veas muchos (o ningún) mensaje aquí.
 
-* **Buscar errores específicos de hardware en dmesg:** Vamos a simular la búsqueda de errores de disco (aunque es poco probable que tu VM tenga errores reales a menos que la host-machine los tenga).
+### Tarea 3. Buscar errores específicos de hardware en dmesg: 
+Vamos a simular la búsqueda de errores de disco (aunque es poco probable que tu VM tenga errores reales a menos que la host-machine los tenga).
 
     ```bash
     sudo dmesg -T | grep -Ei "disk|ata|scsi|io error" | less
     ```
 
-    Si tuvieras un problema de I/O de disco, aquí lo verías.
+Si tuvieras un problema de I/O de disco, aquí lo verías.
 
-* **Monitorear dmesg en tiempo real:** Abre una terminal y ejecuta:
+### Tarea 4. Monitorear dmesg en tiempo real: 
+
+Paso 1. Abre una terminal y ejecuta.
 
     ```bash
     sudo dmesg -w
     ```
 
-    En una segunda terminal, puedes probar a conectar una unidad USB virtual (si tu hypervisor lo permite) o realizar alguna acción de bajo nivel para ver si aparecen mensajes.
+Paso 2. En una segunda terminal, puedes probar a conectar una unidad USB virtual (si tu hypervisor lo permite) o realizar alguna acción de bajo nivel para ver si aparecen mensajes.
 
-#### 7.4.2 Usando journalctl para logs del Kernel
+### Usando journalctl para logs del Kernel
 
-* **Ver solo los mensajes del kernel en journalctl (equivalente a dmesg pero persistente):**
+### Tarea 1. Ver solo los mensajes del kernel en journalctl (equivalente a dmesg pero persistente)
 
     ```bash
     sudo journalctl -k | less
     ```
 
-    Compara la salida con `dmesg`. Debería ser muy similar.
+Compara la salida con `dmesg`. Debería ser muy similar.
 
-* **Filtrar mensajes del kernel por nivel de prioridad crítica o de error:**
+### Tarea 2. Filtrar mensajes del kernel por nivel de prioridad crítica o de error
 
     ```bash
     sudo journalctl -k -p crit,err | less
     ```
 
-    Si el sistema ha experimentado "kernel panics" o errores graves, aparecerán aquí.
+Si el sistema ha experimentado "kernel panics" o errores graves, aparecerán aquí.
 
-* **Ver mensajes del kernel desde un período de tiempo específico:**
+### Tarea 3. Ver mensajes del kernel desde un período de tiempo específico
 
     ```bash
     sudo journalctl -k --since "2 hours ago" | less
     ```
 
-    Esto es útil si sabes cuándo ocurrió un problema.
+Esto es útil si sabes cuándo ocurrió un problema.
 
-* **Ver mensajes de un módulo del kernel específico (ej. ext4 para el sistema de archivos):**
+### Tarea 4. Ver mensajes de un módulo del kernel específico (ej. ext4 para el sistema de archivos)
 
     ```bash
     sudo journalctl -k | grep "ext4" | less
     ```
 
-    Esto te mostrará mensajes relacionados con el sistema de archivos Ext4, útil si tienes problemas de montaje o corrupción de datos.
+Esto te mostrará mensajes relacionados con el sistema de archivos Ext4, útil si tienes problemas de montaje o corrupción de datos.
 
-* **Limpiar el buffer de dmesg para una nueva depuración (Opcional):**
+### Tarea 5. Limpiar el buffer de dmesg para una nueva depuración (Opcional)
 
     ```bash
     sudo dmesg -c
     ```
 
-    ¡Cuidado! Esto borra el buffer actual. Solo hazlo si quieres empezar a depurar un problema nuevo y quieres que `dmesg` solo muestre los mensajes desde ese momento.
+> ¡Cuidado! Esto borra el buffer actual. Solo hazlo si quieres empezar a depurar un problema nuevo y quieres que `dmesg` solo muestre los mensajes desde ese momento.
 
 ---
 
