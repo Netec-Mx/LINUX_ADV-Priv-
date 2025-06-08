@@ -1,123 +1,115 @@
-# Laboratorio Troubleshooting y Operación en Producción
+# Práctica 7.1. Troubleshooting básico: Cuellos de botella (CPU, memoria, I/O)
 
 ## Objetivo de la práctica:
-Al finalizar la práctica, serás capaz de:
-- Detectar cuellos de botella usando herramientas de Linux  como son top, htop.
-- Monitorear y resolver problemas de espacio crítico  usando los comandos du, df.
-- Realizar el análisis de Logs con filtros y patrones.
-- Revisión de errores del sistema usando dmesg y los logs del kernel.
 
-## Duración aproximada:
-- 90 minutos.
+- Simular y diagnosticar cuellos de botella de CPU, memoria y I/O de disco utilizando `top`, `htop`, `stress-ng`, `iostat` y `iotop`.
 
-# Laboratorio 7: Troubleshooting y Operación en Producción
 
----
-
-## Preparación del Entorno
+### Preparación del entorno
 
 Antes de comenzar, asegúrate de que tu máquina Ubuntu tenga acceso a Internet y los paquetes necesarios estén instalados:
 
-* **Actualizar el sistema (si no se ha hecho anteriormente):**
+**Actualizar el sistema (si no se ha hecho anteriormente):**
 
     ```bash
     sudo apt update
     sudo apt upgrade -y
     ```
 
-* **Instalar herramientas adicionales:**
+**Instalar herramientas adicionales:**
 
     ```bash
     sudo apt install htop sysstat iotop ncdu -y
     ```
 
-    * **htop:** Alternativa a `top` con más funciones interactivas.
+     * **htop:** Alternativa a `top` con más funciones interactivas.
     * **sysstat:** Proporciona `iostat` para estadísticas de I/O de disco.
     * **iotop:** Monitoriza la I/O de disco por proceso.
     * **ncdu:** Herramienta interactiva para analizar el uso de disco.
 
----
-
-## Laboratorio 7.1: Troubleshooting básico: Cuellos de botella (CPU, Memoria, I/O)
-
-**Objetivo:** Simular y diagnosticar cuellos de botella de CPU, memoria y I/O de disco utilizando `top`, `htop`, `stress-ng`, `iostat` y `iotop`.
 **Herramientas a utilizar:** `top`, `htop`, `stress-ng`, `iostat`, `iotop`, `free`.
 
-### Preparación del Laboratorio 7.1
 
-* **Instalar stress-ng:** Esta herramienta nos permitirá generar cargas artificiales en CPU, memoria y disco.
+### Preparación de la práctica 7.1.
+
+### Instalar stress-ng 
+Esta herramienta nos permitirá generar cargas artificiales en CPU, memoria y disco.
 
     ```bash
     sudo apt install stress-ng -y
     ```
 
-### Pasos del Laboratorio 7.1
+### Instrucciones
 
-#### 7.1.1 Diagnóstico de Cuello de Botella en la CPU
-
-* **Abrir una terminal y ejecutar htop:**
+### Tarea 1. Abrir una terminal y ejecutar htop
 
     ```bash
     htop
     ```
 
-    Observa el uso de CPU (líneas superiores) y el promedio de carga (Load average). Deberían estar bajos (cercanos a 0 o al número de núcleos si no hay actividad).
+Observa el uso de CPU (líneas superiores) y el promedio de carga (Load average). Deberían estar bajos (cercanos a 0 o al número de núcleos si no hay actividad).
 
-* **Abrir una SEGUNDA terminal y generar carga de CPU:** Vamos a estresar 2 núcleos de CPU durante 60 segundos. Si tienes 4 núcleos, esto debería poner la CPU al 50%. Ajusta 2 al número de núcleos que desees estresar.
+
+## Tarea 2. Abrir una SEGUNDA terminal y generar carga de CPU 
+Vamos a estresar 2 núcleos de CPU durante 60 segundos. Si tienes 4 núcleos, esto debería poner la CPU al 50%. Ajusta 2 al número de núcleos que desees estresar.
 
     ```bash
     stress-ng --cpu 2 --timeout 60s
     ```
 
-* **Volver a la PRIMERA terminal (donde se ejecuta htop):**
+### Tarea 3. Volver a la PRIMERA terminal (donde se ejecuta htop)
 
-    * **Observa el uso de CPU:** Deberías ver uno o más núcleos de CPU subiendo al 100% de uso, y el promedio de carga comenzando a subir significativamente.
-    * **Identifica los procesos culpables:** En la lista de procesos, busca `stress-ng` con un alto porcentaje en la columna `%CPU`.
+Paso 1. **Observa el uso de CPU:** Deberías ver uno o más núcleos de CPU subiendo al 100% de uso, y el promedio de carga comenzando a subir significativamente.
 
-* **Esperar a que stress-ng termine (o cancelarlo con Ctrl+C):** Observa cómo el uso de CPU y el promedio de carga bajan de nuevo a la normalidad en `htop`.
+Paso 2. **Identifica los procesos culpables:** En la lista de procesos, busca `stress-ng` con un alto porcentaje en la columna `%CPU`.
 
-#### 7.1.2 Diagnóstico de Cuello de Botella en la Memoria
+Paso 3. **Esperar a que stress-ng termine (o cancelarlo con Ctrl+C):** Observa cómo el uso de CPU y el promedio de carga bajan de nuevo a la normalidad en `htop`.
 
-* **En una terminal, ejecutar free -h:**
+### Tarea 4. En una terminal, ejecutar free -h
 
     ```bash
     free -h
     ```
 
-    Toma nota de la memoria "used", "free" y "available", así como el uso de "Swap".
+Toma nota de la memoria "used", "free" y "available", así como el uso de "Swap".
 
-* **Abrir una SEGUNDA terminal y generar carga de memoria:** Vamos a asignar 1GB de memoria virtual. Ajusta `1G` si tienes poca RAM o quieres estresar más/menos.
+### Tarea 5. Abrir una SEGUNDA terminal y generar carga de memoria
+
+Vamos a asignar 1GB de memoria virtual. Ajusta `1G` si tienes poca RAM o quieres estresar más/menos.
 
     ```bash
     stress-ng --vm 1 --vm-bytes 1G --timeout 60s
     ```
 
-* **Volver a la PRIMERA terminal (donde se ejecuta htop) y observa:**
+### Tarea 6. Volver a la PRIMERA terminal (donde se ejecuta htop) y observa
 
-    * **Uso de Memoria:** La barra de memoria (`MiB Mem`) debería llenarse. Si el sistema tiene poca RAM, verás que el Swap comienza a usarse (la barra `MiB Swap` se llenará).
-    * **Procesos culpables:** Busca `stress-ng` con un alto porcentaje en la columna `%MEM`.
+Paso 1. **Uso de memoria:** La barra de memoria (`MiB Mem`) debería llenarse. Si el sistema tiene poca RAM, verás que el Swap comienza a usarse (la barra `MiB Swap` se llenará).
 
-* **Mientras stress-ng está activo, en una TERCERA terminal, ejecuta free -h de nuevo:**
+Paso 2. **Procesos culpables:** Busca `stress-ng` con un alto porcentaje en la columna `%MEM`.
+
+Paso 3 Mientras stress-ng está activo, en una TERCERA terminal, ejecuta free -h de nuevo.
 
     ```bash
     free -h
     ```
 
-    Compara los valores con los iniciales. Deberías ver un aumento en la memoria "used" y potencialmente en el "Swap".
+Paso 4. Compara los valores con los iniciales. Deberías ver un aumento en la memoria "used" y potencialmente en el "Swap".
 
-* **Esperar a que stress-ng termine (o cancelarlo):** Observa cómo la memoria se libera en `htop` y `free -h`.
+Paso 5. **Espera a que stress-ng termine (o cancelalo):** Observa cómo la memoria se libera en `htop` y `free -h`.
 
-#### 7.1.3 Diagnóstico de Cuello de Botella en I/O de Disco
+### Tarea 7. Diagnóstico de cuello de botella en I/O de disco
 
-* **En una terminal, ejecutar iostat -x 1:**
+Paso 1. En una terminal, ejecutar iostat -x 1.
 
     ```bash
     iostat -x 1
     ```
 
-    Observa los valores de `%util` y `avgqu-sz` para tus discos (ej. `sda`). Deberían estar bajos. También observa `%iowait` en la sección `avg-cpu`.
+Paso 2. Observa los valores de `%util` y `avgqu-sz` para tus discos (ej. `sda`). Deberían estar bajos. También observa `%iowait` en la sección `avg-cpu`.
 
-* **Abrir una SEGUNDA terminal y generar carga de I/O de disco:** Vamos a crear y escribir en un archivo grande en `/tmp`.
+### Tarea 8. Abrir una SEGUNDA terminal y generar carga de I/O de disco
+
+Vamos a crear y escribir en un archivo grande en `/tmp`.
 
     ```bash
     stress-ng --io 1 --hdd 1 --hdd-bytes 1G --timeout 60s --temp-path /tmp
@@ -128,41 +120,45 @@ Antes de comenzar, asegúrate de que tu máquina Ubuntu tenga acceso a Internet 
     * `--hdd-bytes 1G`: Opera con 1GB de datos.
     * `--temp-path /tmp`: Utiliza el directorio `/tmp` para los archivos temporales.
 
-* **Volver a la PRIMERA terminal (donde se ejecuta iostat -x 1):**
+### Tarea 9. Volver a la PRIMERA terminal (donde se ejecuta iostat -x 1)
 
-    * **Observa %util y avgqu-sz:** Deberían subir significativamente (cercano al 100% y un valor alto respectivamente) para tu disco.
-    * **Observa %iowait en avg-cpu:** Este valor indica el tiempo que la CPU espera por operaciones de I/O. Debería aumentar.
+Paso 1. **Observa %util y avgqu-sz:** Deberían subir significativamente (cercano al 100% y un valor alto respectivamente) para tu disco.
 
-* **Abrir una TERCERA terminal y ejecutar iotop (puede requerir sudo):**
+Paso 2. **Observa %iowait en avg-cpu:** Este valor indica el tiempo que la CPU espera por operaciones de I/O. Debería aumentar.
+
+### Tarea 10. Abrir una TERCERA terminal y ejecutar iotop (puede requerir sudo)
 
     ```bash
     sudo iotop
     ```
 
-    * **Identifica los procesos que están generando la mayor cantidad de lecturas (READ/s) y escrituras (WRITE/s).** Deberías ver `stress-ng` en la parte superior.
+Paso 1. Identifica los procesos que están generando la mayor cantidad de lecturas (READ/s) y escrituras (WRITE/s). Deberías ver `stress-ng` en la parte superior.
 
-* **Esperar a que stress-ng termine (o cancelarlo):** Observa cómo los valores de I/O de disco vuelven a la normalidad.
+Paso 2. Esperar a que stress-ng termine (o cancelarlo): Observa cómo los valores de I/O de disco vuelven a la normalidad.
 
 ---
 
-## Laboratorio 7.2: Troubleshooting básico: Espacio crítico (du, df, etc)
+# Práctica 7.2. Troubleshooting básico: Espacio crítico (du, df, etc)
 
-**Objetivo:** Identificar y gestionar situaciones de espacio en disco crítico utilizando `df`, `du`, `ncdu` y realizando acciones de limpieza.
+## Objetivo de la práctica: 
+
+- Identificar y gestionar situaciones de espacio en disco crítico utilizando `df`, `du`, `ncdu` y realizando acciones de limpieza.
+
 **Herramientas a utilizar:** `df`, `du`, `ncdu`, `dd`, `rm`, `apt`.
 
-### Pasos del Laboratorio 7.2
+### Instrucciones
 
-#### 7.2.1 Diagnóstico de Espacio en Disco Crítico
+### Tarea 1. Diagnóstico de espacio en disco crítico
 
-* **Verificar el espacio actual:**
+Paso 1. Verifica el espacio actual.
 
     ```bash
     df -h
     ```
 
-    Toma nota del porcentaje de uso en tu partición raíz (`/`). Debería ser relativamente bajo.
+Paso 2. Toma nota del porcentaje de uso en tu partición raíz (`/`). Debería ser relativamente bajo.
 
-* **Simular llenado de disco:** Vamos a crear un archivo grande en el directorio `/tmp` (asegúrate de que tu partición raíz tenga suficiente espacio para esto, ajusta `count` si es necesario). ¡Cuidado con llenar completamente tu partición raíz en un sistema de producción!
+Paso 3. **Simular llenado de disco:** Vamos a crear un archivo grande en el directorio `/tmp` (asegúrate de que tu partición raíz tenga suficiente espacio para esto, ajusta `count` si es necesario). ¡Cuidado con llenar completamente tu partición raíz en un sistema de producción!
 
     ```bash
     sudo dd if=/dev/zero of=/tmp/large_file.bin bs=1G count=3
@@ -170,41 +166,41 @@ Antes de comenzar, asegúrate de que tu máquina Ubuntu tenga acceso a Internet 
 
     Esto creará un archivo de 3GB lleno de ceros.
 
-* **Verificar el espacio de nuevo:**
+### Tarea 2. Verificar el espacio de nuevo
 
     ```bash
     df -h
     ```
 
-    Deberías ver que el porcentaje de uso de tu partición raíz ha aumentado considerablemente.
+Deberías ver que el porcentaje de uso de tu partición raíz ha aumentado considerablemente.
 
-* **Identificar qué está ocupando espacio con ncdu:**
+### Tarea 3. Identificar qué está ocupando espacio con ncdu
 
     ```bash
     sudo ncdu /
     ```
 
-    * Usa las flechas para navegar por los directorios.
-    * Identifica `/tmp` y verás el `large_file.bin` ocupando gran parte del espacio.
-    * Presiona `q` para salir de `ncdu`.
+Paso 1. Usa las flechas para navegar por los directorios.
+Paso 2. Identifica `/tmp` y verás el `large_file.bin` ocupando gran parte del espacio.
+Paso 3. Presiona `q` para salir de `ncdu`.
 
-#### 7.2.2 Solución de Espacio Crítico
+### Solución de espacio crítico
 
-* **Eliminar archivos grandes identificados:**
+### Tarea 1. Eliminar archivos grandes identificados
 
     ```bash
     sudo rm /tmp/large_file.bin
     ```
 
-* **Verificar la liberación de espacio:**
+### Tarea 2. Verificar la liberación de espacio
 
     ```bash
     df -h
     ```
 
-    El porcentaje de uso de tu partición raíz debería haber vuelto a la normalidad.
+El porcentaje de uso de tu partición raíz debería haber vuelto a la normalidad.
 
-* **Limpiar la caché de paquetes APT:** Con el tiempo, el gestor de paquetes guarda los `.deb` descargados en `/var/cache/apt/archives`.
+**Limpiar la caché de paquetes APT:** Con el tiempo, el gestor de paquetes guarda los `.deb` descargados en `/var/cache/apt/archives`.
 
     ```bash
     sudo du -sh /var/cache/apt/archives/
@@ -214,15 +210,15 @@ Antes de comenzar, asegúrate de que tu máquina Ubuntu tenga acceso a Internet 
 
     Observa cómo el tamaño se reduce.
 
-* **Eliminar dependencias innecesarias:**
+### Tarea 3. Eliminar dependencias innecesarias
 
     ```bash
     sudo apt autoremove
     ```
 
-    Esto puede liberar espacio si hay paquetes instalados como dependencias que ya no son requeridos por ningún software.
+Esto puede liberar espacio si hay paquetes instalados como dependencias que ya no son requeridos por ningún software.
 
-* **Revisar y gestionar logs antiguos (simulación):** Aunque `logrotate` se encarga de esto, simulemos una revisión manual.
+**Revisar y gestionar logs antiguos (simulación):** Aunque `logrotate` se encarga de esto, simulemos una revisión manual.
 
     ```bash
     sudo du -sh /var/log/
@@ -235,12 +231,14 @@ Antes de comenzar, asegúrate de que tu máquina Ubuntu tenga acceso a Internet 
 
 ---
 
-## Laboratorio 7.3: Análisis de Logs con filtros y patrones
+# Práctica 7.3. Análisis de logs con filtros y patrones
 
-**Objetivo:** Practicar la extracción de información útil de archivos de logs utilizando `grep`, `awk`, `tail` y `pipes`.
+## Objetivo de la práctica:
+- Practicar la extracción de información útil de archivos de logs utilizando `grep`, `awk`, `tail` y `pipes`.
+
 **Herramientas a utilizar:** `grep`, `awk`, `tail`, `sort`, `uniq`, `head`, `journalctl`.
 
-### Preparación del Laboratorio 7.3
+### Preparación del laboratorio 
 
 * **Generar actividad en el log de autenticación:** Vamos a intentar iniciar sesión con un usuario inexistente varias veces para generar entradas "Failed password" en `/var/log/auth.log`.
 
@@ -250,11 +248,11 @@ Antes de comenzar, asegúrate de que tu máquina Ubuntu tenga acceso a Internet 
     # Repite este comando 3-5 veces.
     ```
 
-    Luego, inicia sesión con tu propio usuario o `exit` de la máquina si estás usando SSH.
+Luego, inicia sesión con tu propio usuario o `exit` de la máquina si estás usando SSH.
 
-### Pasos del Laboratorio 7.3
+### Instrucciones
 
-#### 7.3.1 Filtrado Básico con grep
+#### Filtrado básico con grep
 
 * **Buscar intentos de inicio de sesión fallidos:**
 
