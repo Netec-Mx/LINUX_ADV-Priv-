@@ -9,7 +9,7 @@ Esta práctica te guiará a través de la creación y modificación de **permiso
 
 ### Instrucciones
 
-### Tarea 1. Crea un archivo de prueba
+### Tarea 1. Crear un archivo de prueba
 
 Paso 1. Abre tu terminal y crea un archivo simple:
 
@@ -20,7 +20,7 @@ Paso 1. Abre tu terminal y crea un archivo simple:
 
 Paso 2. Observa la salida de `ls -l`. Verás algo como `-rw-r--r--`, indicando permisos de lectura/escritura para el propietario, y solo lectura para el grupo y otros.
 
-### Tarea 2. Intenta ejecutar el archivo
+### Tarea 2. Intentar ejecutar el archivo
 
     ```bash
     ./mi_documento.txt
@@ -28,7 +28,7 @@ Paso 2. Observa la salida de `ls -l`. Verás algo como `-rw-r--r--`, indicando p
 
 Verás un error de "**Permiso denegado**", porque es un archivo de texto, no un ejecutable.
 
-### Tarea 3. Convierte el archivo en un script ejecutable y añade permisos
+### Tarea 3. Convertir el archivo en un script ejecutable y añadir permisos
 
     ```bash
     echo "#!/bin/bash" > mi_script.sh
@@ -39,7 +39,7 @@ Verás un error de "**Permiso denegado**", porque es un archivo de texto, no un 
 
 Ahora deberías ver `rwxr-xr-x` en la salida. La `x` al final de cada bloque indica permiso de ejecución.
 
-### Tarea 4. Ejecuta el script
+### Tarea 4. Ejecutar el script
 
     ```bash
     ./mi_script.sh
@@ -47,7 +47,7 @@ Ahora deberías ver `rwxr-xr-x` en la salida. La `x` al final de cada bloque ind
 
 Deberías ver el mensaje "¡Hola desde mi script!".
 
-### Tarea 5. Restringe permisos de escritura para "otros"
+### Tarea 5. Restringir permisos de escritura para "otros"
 
 Paso 1. Vamos a quitar el permiso de escritura para la categoría "otros" (world) del script.
 
@@ -58,7 +58,7 @@ Paso 1. Vamos a quitar el permiso de escritura para la categoría "otros" (world
 
 La salida debería ser ahora `-rwxr-xr-x`. ¡Ah, espera! ¿Por qué no cambió? Porque la "w" para "otros" no estaba activada. Probemos con un archivo donde sí tenga sentido.
 
-### Tarea 6. Restringe permisos de escritura en un documento
+### Tarea 6. Restringir permisos de escritura en un documento
 
     ```bash
     echo "Contenido secreto" > documento_secreto.txt
@@ -68,7 +68,7 @@ La salida debería ser ahora `-rwxr-xr-x`. ¡Ah, espera! ¿Por qué no cambió? 
 
 Verás que los permisos para "otros" son ahora `-r--` o similares, sin la `w`.
 
-### Tarea 7. Cambia permisos usando notación numérica
+### Tarea 7. Cambiar permisos usando notación numérica
 
 Ahora cambiaremos el script para que solo el propietario tenga todos los permisos, y nadie más pueda hacer nada con él.
 
@@ -91,7 +91,7 @@ La salida será `-rwx------`. Solo tú (el propietario) puedes leer, escribir y 
 
 Verás un error que indica que necesitas ser root o usar `sudo`.
 
-### Tarea 2. Ejecuta el mismo comando con `sudo`
+### Tarea 2. Ejecutar el mismo comando con `sudo`
 
     ```bash
     sudo apt update
@@ -99,7 +99,7 @@ Verás un error que indica que necesitas ser root o usar `sudo`.
 
 Se te pedirá tu contraseña de usuario. Ingresa y observa cómo el comando se ejecuta con éxito, ya que `apt update` requiere privilegios elevados.
 
-### Tarea 3. Abre un archivo de sistema con `sudo` y un editor de texto
+### Tarea 3. Abrir un archivo de sistema con `sudo` y un editor de texto
 
 Paso 1. El archivo `/etc/hosts` es un archivo de sistema. Intenta abrirlo sin `sudo`:
 
@@ -117,7 +117,7 @@ Paso 3. Ahora, ábrelo con `sudo`:
 
 Paso 4. Se te pedirá tu contraseña. Una vez dentro, puedes hacer cambios (no guardes nada crítico para esta prueba) y verás que puedes guardar (`Ctrl+O`) sin problemas.
 
-### Tarea 4. Entiende el archivo `/etc/sudoers`
+### Tarea 4. Entender el archivo `/etc/sudoers`
 
 > *¡Advertencia!* Siempre usa `sudo visudo` para editar este archivo. Un error de sintaxis puede bloquearte.
 
@@ -143,15 +143,18 @@ Este laboratorio te familiarizará con comandos para revisar la actividad de los
 
 ---
 
-### Tarea 1. Monitoriza la Actividad de Usuarios. Ve quién se ha conectado recientemente
+### Tarea 1. Monitorizar la actividad de usuarios
+
+Paso 1. Ve quién se ha conectado recientemente.
 
     ```bash
     last
     ```
 
-Observa la lista de sesiones. Busca tu propio usuario, cualquier "reboot" (reinicios) y la dirección IP desde donde se conectaron.
+Paso 2. Observa la lista de sesiones. 
+Paso 3. Busca tu propio usuario, cualquier "reboot" (reinicios) y la dirección IP desde donde se conectaron.
 
-### Tarea 2. Ve quién está conectado ahora mismo
+### Tarea 2. Ver quién está conectado ahora mismo
 
     ```bash
     who
@@ -159,7 +162,7 @@ Observa la lista de sesiones. Busca tu propio usuario, cualquier "reboot" (reini
 
 Deberías verte a ti mismo y quizás otros usuarios si están conectados simultáneamente. Fíjate en la terminal (`tty` o `pts`) y la IP de origen.
 
-### Tarea 3. Ve quién está conectado y qué está haciendo
+### Tarea 3. Ver quién está conectado y qué está haciendo
 
     ```bash
     w
@@ -171,7 +174,7 @@ Esta es una versión más detallada de `who`. Presta atención a la columna `WHA
 
 # Práctica 6.3. Revisar procesos en ejecución
 
-### Tarea 1. Lista todos los procesos del sistema
+### Tarea 1. Listar todos los procesos del sistema
 
     ```bash
     ps aux
@@ -179,7 +182,7 @@ Esta es una versión más detallada de `who`. Presta atención a la columna `WHA
 
 Esta lista es muy larga. Presta atención a la columna `USER` para ver qué usuario posee cada proceso y a la columna `COMMAND` para el nombre del programa.
 
-### Tarea 2. Busca un proceso específico (ej. SSH)
+### Tarea 2. Buscar un proceso específico (ej. SSH)
 
     ```bash
     ps aux | grep sshd
@@ -191,7 +194,7 @@ Esto filtrará los procesos relacionados con el demonio SSH. Observa que el `USE
 
 # Práctica 6.3. Explorar los logs del sistema
 
-### Tarea 1. Ve el log de autenticación
+### Tarea 1. Ver el log de autenticación
 
 Este log es crucial para la seguridad, ya que registra inicios de sesión y usos de `sudo`.
 
@@ -205,7 +208,7 @@ Paso 2. Busca líneas que contengan "Accepted password" (inicio de sesión exito
 
 Paso 3. Presiona `q` para salir de `less`.
 
-### Tarea 2. Monitoriza el log de autenticación en tiempo real
+### Tarea 2. Monitorizar el log de autenticación en tiempo real
 
     ```bash
     sudo tail -f /var/log/auth.log
@@ -217,7 +220,7 @@ Paso 2. En otra terminal, intenta iniciar sesión con una contraseña incorrecta
 
 Paso 3. Presiona `Ctrl+C` para detener `tail`.
 
-### Tarea 3. Busca un comando `sudo` específico en los logs
+### Tarea 3. Buscar un comando `sudo` específico en los logs
 
     ```bash
     grep "sudo" /var/log/auth.log
@@ -239,7 +242,7 @@ Este laboratorio se enfoca en asegurar aspectos clave como SSH y la configuraci�
 
 ### Hardening de SSH
 
-### Tarea 1. Haz una copia de seguridad del archivo de configuración SSH
+### Tarea 1. Hacer una copia de seguridad del archivo de configuración SSH
 
 Siempre haz una copia de seguridad antes de modificar archivos de configuración críticos.
 
@@ -247,7 +250,7 @@ Siempre haz una copia de seguridad antes de modificar archivos de configuración
     sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
     ```
 
-### Tarea 2. Edita el archivo de configuración SSH
+### Tarea 2. Editar el archivo de configuración SSH
 
 Vamos a cambiar el puerto, deshabilitar la autenticación con contraseña y el acceso directo de root.
 
@@ -274,7 +277,7 @@ Paso 1. Dentro del editor, busca y modifica/añade las siguientes líneas:
 
 Paso 2. Guarda los cambios (`Ctrl+O`, `Enter`) y sal (`Ctrl+X`).
 
-### Tarea 3. Reinicia el servicio SSH
+### Tarea 3. Reiniciar el servicio SSH
 
     ```bash
     sudo systemctl restart sshd
@@ -282,7 +285,7 @@ Paso 2. Guarda los cambios (`Ctrl+O`, `Enter`) y sal (`Ctrl+X`).
 
 Si tienes una sesión SSH activa, no la cierres todavía por si algo salió mal. Abre una nueva terminal e intenta conectarte usando el nuevo puerto.
 
-### Tarea 4. Prueba la nueva configuración SSH
+### Tarea 4. Probar la nueva configuración SSH
 
 Abre una nueva terminal (o desde otra máquina) e intenta conectarte:
 
@@ -295,7 +298,7 @@ Abre una nueva terminal (o desde otra máquina) e intenta conectarte:
 Si la conexión es exitosa, ¡felicidades! Has endurecido SSH. 
 Si falla, revisa `/var/log/auth.log` para ver el error y los cambios en `sshd_config.bak` para revertir si es necesario.
 
-### Tarea 5. Instala y habilita Fail2Ban (opcional, pero muy recomendado)
+### Tarea 5. Instalar y habilitar Fail2Ban (opcional, pero muy recomendado)
 
     ```bash
     sudo apt install fail2ban
@@ -310,14 +313,14 @@ Fail2Ban monitoreará automáticamente los logs de SSH y bloqueará IPs con inte
 
 ### Configuración del Firewall (UFW)
 
-### Tarea 1. Deniega todo el tráfico entrante por defecto y permite el saliente
+### Tarea 1. Denegar todo el tráfico entrante por defecto y permitir el saliente
 
     ```bash
     sudo ufw default deny incoming
     sudo ufw default allow outgoing
     ```
 
-### Tarea 2. Permite los servicios necesarios (SSH y otros)
+### Tarea 2. Permitir los servicios necesarios (SSH y otros)
 
     ```bash
     sudo ufw allow 2222/tcp # Asegúrate de usar el puerto SSH que configuraste antes
@@ -326,7 +329,7 @@ Fail2Ban monitoreará automáticamente los logs de SSH y bloqueará IPs con inte
     # sudo ufw allow https
     ```
 
-### Tarea 3. Habilita UFW
+### Tarea 3. Habilitar UFW
 
     ```bash
     sudo ufw enable
@@ -334,7 +337,7 @@ Fail2Ban monitoreará automáticamente los logs de SSH y bloqueará IPs con inte
 
 Se te advertirá que esto puede interrumpir conexiones SSH. Confirma con `y`.
 
-### Tarea 4. Verifica el estado del firewall
+### Tarea 4. Verificar el estado del firewall
 
     ```bash
     sudo ufw status verbose
@@ -346,13 +349,13 @@ Deberías ver que UFW está activo y las reglas que definiste.
 
 ### Parámetros del Kernel (sysctl)
 
-### Tarea 1. Haz una copia de seguridad del archivo `sysctl.conf`
+### Tarea 1. Hacer una copia de seguridad del archivo `sysctl.conf`
 
     ```bash
     sudo cp /etc/sysctl.conf /etc/sysctl.conf.bak
     ```
 
-### Tarea 2. Edita el archivo de configuración del kernel
+### Tarea 2. Editar el archivo de configuración del kernel
 
     ```bash
     sudo nano /etc/sysctl.conf
@@ -391,7 +394,7 @@ Añade las siguientes líneas al final del archivo. Estas son algunas recomendac
 
 Guarda los cambios (`Ctrl+O`, `Enter`) y sal (`Ctrl+X`).
 
-### Tarea 3. Aplica los cambios del kernel
+### Tarea 3. Aplicar los cambios del kernel
 
     ```bash
     sudo sysctl -p
