@@ -27,6 +27,8 @@ Paso 1. Ejecuta el comando `ps aux`. Esto listará todos los procesos que se est
 
 </br>
 
+---
+
 # Práctica 1.2. Sistema de archivos: Jerarquía FHS (Filesystem Hierarchy Standard)
 
 ## Objetivo de la práctica:
@@ -74,6 +76,8 @@ Paso 3. Ejecuta `ls -l /var/log`. Aquí encontrarás muchos archivos de registro
 
 <br/>
 
+--- 
+
 # Práctica 1.3. Línea de comandos (CLI) - Comandos básicos
 
 ## Objetivo de la práctica: 
@@ -111,6 +115,8 @@ Paso 3. Ejecuta `ls -l /var/log`. Aquí encontrarás muchos archivos de registro
 * **Reflexión:** ¿Qué ventajas tiene usar la línea de comandos sobre una interfaz gráfica para estas tareas?, ¿qué desventajas?
 
 <br/>
+
+---
 
 # Práctica 1.4: Permisos de archivos y directorios
 
@@ -164,6 +170,8 @@ Paso 3. Vuelve a cambiar el propietario y grupo a tu usuario: `sudo chown tu_usu
 * **Reflexión:** ¿Por qué es tan importante la gestión de permisos en un sistema multiusuario como Linux? ¿Qué riesgos existen si los permisos no se configuran correctamente?
 
 <br/>
+
+ ---
 
 # Práctica 1.5. Gestión de procesos
 
