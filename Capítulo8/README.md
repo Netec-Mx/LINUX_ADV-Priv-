@@ -75,7 +75,7 @@ Paso 3. Verifica que los archivos existan:
 
 > **¡Importante!** En un escenario real, este directorio estaría en un almacenamiento externo, NAS o servidor de backups dedicado.
 
-### Tarea 5. Revisión del entorno: Asegúrate de que no haya errores durante la instalación y creación de archivos.
+**Revisión del entorno:** Asegúrate de que no haya errores durante la instalación y creación de archivos.
 
 ---
 
