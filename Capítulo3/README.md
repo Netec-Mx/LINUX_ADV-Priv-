@@ -229,28 +229,30 @@ Paso 1. Haz una **COPIA DE SEGURIDAD** de tu archivo `.yaml` actual:
         * `sudo cp /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml.bak`
 
 Paso 2. Edita el archivo `.yaml` para añadir la VLAN (ejemplo):
-        ```yaml
-        # ADAPTA ESTE EJEMPLO A TU INTERFAZ Y RED LOCAL
-        network:
-          version: 2
-          renderer: networkd
-          ethernets:
-            <NOMBRE_INTERFAZ>: # Tu interfaz física (ej. enp0s3)
-              dhcp4: no # O 'yes' si tu red física principal la usa
-              # addresses: [<IP_FISICA>/<PREFIJO_FISICO>] # Si tu interfaz física tiene IP estática
-              # routes: ... # Rutas para la interfaz física si es necesario
-          vlans:
-            <NOMBRE_INTERFAZ>.10: # Nombre de la subinterfaz VLAN (ej. enp0s3.10)
-              id: 10 # El ID de la VLAN
-              link: <NOMBRE_INTERFAZ> # La interfaz física a la que se asocia
-              dhcp4: no # La VLAN tendrá IP estática
-              addresses: [192.168.10.1/24] # IP para esta VLAN
-              # routes: # Opcional: Rutas específicas para esta VLAN
-              #   - to: default
-              #     via: 192.168.10.254 # Gateway para esta VLAN si la hubiera
-              nameservers:
-                addresses: [8.8.8.8] # DNS para esta VLAN
-        ```
+
+```
+# ADAPTA ESTE EJEMPLO A TU INTERFAZ Y RED LOCAL
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    <NOMBRE_INTERFAZ>: # Tu interfaz física (ej. enp0s3)
+    dhcp4: no # O 'yes' si tu red física principal la usa
+    # addresses: [<IP_FISICA>/<PREFIJO_FISICO>] # Si tu interfaz física tiene IP estática
+    # routes: ... # Rutas para la interfaz física si es necesario
+vlans:
+    <NOMBRE_INTERFAZ>.10: # Nombre de la subinterfaz VLAN (ej. enp0s3.10)
+    id: 10 # El ID de la VLAN
+    link: <NOMBRE_INTERFAZ> # La interfaz física a la que se asocia
+    dhcp4: no # La VLAN tendrá IP estática
+    addresses: [192.168.10.1/24] # IP para esta VLAN
+    # routes: # Opcional: Rutas específicas para esta VLAN
+    #   - to: default
+    #     via: 192.168.10.254 # Gateway para esta VLAN si la hubiera
+    nameservers:
+      addresses: [8.8.8.8] # DNS para esta VLAN
+
+```
         
         * `sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml`
    
