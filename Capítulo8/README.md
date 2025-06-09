@@ -1,18 +1,15 @@
-
-
-## Laboratorio 8: Preparación del Entorno
+## Preparación del entorno
 
 Este laboratorio preparará tu servidor Ubuntu para los ejercicios siguientes.
 
-**Objetivo:** Configurar una VM Ubuntu limpia para los laboratorios.
-
 **Requisitos:** Una máquina virtual (VirtualBox, VMware, KVM) o un servidor en la nube con Ubuntu Server 22.04 LTS (o similar) instalado.
 
-### Pasos:
+### Instrucciones
 
-1.  **Actualizar el sistema** (si no se ha actualizado antes):
-    * Inicia sesión en tu servidor Ubuntu.
-    * Actualiza los paquetes y el sistema:
+### Tarea 1. Actualizar el sistema (si no se ha actualizado antes):
+
+Paso 1. Inicia sesión en tu servidor Ubuntu.
+Paso 2. Actualiza los paquetes y el sistema:
 
         ```bash
         sudo apt update
@@ -21,27 +18,29 @@ Este laboratorio preparará tu servidor Ubuntu para los ejercicios siguientes.
         sudo apt autoremove -y # Para limpiar paquetes obsoletos
         ```
 
-2.  **Instalar herramientas básicas necesarias**:
-    * Instala `git` (necesario para la sección 8.2):
+### Tarea 2. Instalar herramientas básicas necesarias
+
+Paso 1. Instala `git` (necesario para la sección 8.2):
 
         ```bash
         sudo apt install git -y
         ```
 
-    * Instala `net-tools` y `iputils-ping` (para `netstat` y `ping` en validaciones):
+Paso 2. Instala `net-tools` y `iputils-ping` (para `netstat` y `ping` en validaciones):
 
         ```bash
         sudo apt install net-tools iputils-ping -y
         ```
 
-    * Instala `htop` y `glances` (herramientas de monitoreo visual):
+Paso 3. Instala `htop` y `glances` (herramientas de monitoreo visual):
 
         ```bash
         sudo apt install htop glances -y
         ```
 
-3.  **Crear algunos archivos de configuración y scripts de ejemplo**:
-    * Creamos un directorio para configuraciones simuladas:
+### Tarea 3. Crear algunos archivos de configuración y scripts de ejemplo
+
+Paso 1. Creamos un directorio para configuraciones simuladas:
 
         ```bash
         sudo mkdir -p /etc/lab_configs
@@ -49,7 +48,7 @@ Este laboratorio preparará tu servidor Ubuntu para los ejercicios siguientes.
         echo "APP_VERSION=1.0.0" | sudo tee /etc/lab_configs/app_settings.conf
         ```
 
-    * Creamos un directorio para scripts simulados:
+Paso 2. Creamos un directorio para scripts simulados:
 
         ```bash
         sudo mkdir -p /usr/local/lab_scripts
@@ -63,19 +62,20 @@ Este laboratorio preparará tu servidor Ubuntu para los ejercicios siguientes.
         sudo chmod +x /usr/local/lab_scripts/cleanup.sh
         ```
 
-    * Verifica que los archivos existan:
+Paso 3. Verifica que los archivos existan:
 
         ```bash
         ls -l /etc/lab_configs/
         ls -l /usr/local/lab_scripts/
         ```
 
-4.  **Crear un directorio de destino para los backups (local)**:
+### Tarea 4. Crear un directorio de destino para los backups (local)
     * `sudo mkdir -p /mnt/lab_backups`
     * `sudo chown -R $USER:$USER /mnt/lab_backups` # Asegura que tu usuario pueda escribir aquí
-    * **¡Importante!** En un escenario real, este directorio estaría en un almacenamiento externo, NAS o servidor de backups dedicado.
 
-5.  **Revisión del entorno:** Asegúrate de que no haya errores durante la instalación y creación de archivos.
+> **¡Importante!** En un escenario real, este directorio estaría en un almacenamiento externo, NAS o servidor de backups dedicado.
+
+### Tarea 5. Revisión del entorno: Asegúrate de que no haya errores durante la instalación y creación de archivos.
 
 ---
 
