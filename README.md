@@ -14,7 +14,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
  
 ## Índice:
 
-[Fundamentos del sistema Linux en Ubuntu](./Capítulo1/README.md)
+## [Fundamentos del sistema Linux en Ubuntu](./Capítulo1/README.md)
 
  - [Práctica 1.1. Arquitectura de Linux (repaso y observación).]
    - **Descripción**:Comprender de forma práctica la separación entre el espacio de usuario y el kernel, y cómo interactúan las aplicaciones.
@@ -38,7 +38,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 </br>
 
-[Gestión de procesos, systemd y software](./Capítulo2/README.md)
+## [Gestión de procesos, systemd y software](./Capítulo2/README.md)
 
  - [Práctica 2.1. Gestión y monitoreo de proceos y servicios (systemd).]
    - **Descripción**: Identificar y listar procesos en ejecución en el sistema, monitorear el consumo de recursos (CPU, memoria) de los procesos en tiempo real y comprender cómo habilitar y deshabilitar servicios para el inicio automático.
@@ -54,7 +54,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 <br/>
 
-[Redes en Linux](./Capítulo3/README.md)
+## [Redes en Linux](./Capítulo3/README.md)
 
  - [Práctica 3.1. Comandos clave para diagnóstico y visibilidad de red.]
    - **Descripción**: Utilizar ip para inspeccionar la configuración de interfaces de red, direcciones IP y tablas de enrutamiento, así como emplear ss y netstat para listar conexiones de red activas y puertos en escucha.
@@ -80,7 +80,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 <br/>
 
-[Servicios de red](./Capítulo4/README.md)
+## [Servicios de red](./Capítulo4/README.md)
 
  - [Práctica 4.1. Configuración de servicios (SSH y NTP) y gestión de puertos con UFW.]
    - **Descripción**: Instalar y configurar el servicio SSH en servidor-Ubuntu, nstalar y configurar el servicio NTP (systemd-timesyncd) y configurar reglas de firewall UFW para SSH y verificar puertos. 
@@ -98,7 +98,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 <br/>
 
-[Automatización](./Capítulo5/README.md)
+## [Automatización](./Capítulo5/README.md)
 
  - [Práctica 5.1. Shell Scripting con Bash.]
    - **Descripción**: Crear un script Bash para automatizar la gestión de usuarios y directorios.
@@ -118,7 +118,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 <br/>
 
-[Seguridad básica en Linux](./Capítulo6/README.md)
+## [Seguridad básica en Linux](./Capítulo6/README.md)
 
  - [Práctica 6.1. Permiso y sudo.]
    - **Descripción**: Comprender cómo los permisos afectan el acceso a archivos y practicar el uso seguro de sudo.
@@ -138,7 +138,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 <br/>
 
-[Troubleshooting y operación en producción](./Capítulo7/README.md)
+## [Troubleshooting y operación en producción](./Capítulo7/README.md)
 
  - [Práctica 7.1. Troubleshooting básico: Cuellos de botella (CPU, Memoria, I/O).]
    - **Descripción**: Simular y diagnosticar cuellos de botella de CPU, memoria y I/O de disco utilizando top, htop, stress-ng, iostat y iotop.
@@ -158,7 +158,7 @@ Cada uno de estos laboratorios está diseñado para ofrecerte una experiencia pr
 
 <br/>
 
-[Buenas prácticas y mantenimiento en producción](./Capítulo8/README.md)
+## [Buenas prácticas y mantenimiento en producción](./Capítulo8/README.md)
 
  - [Práctica 8.1. Backups de configuración y scripts (rsync, tar, scp).]
    - **Descripción**: Practicar la creación de backups de configuraciones y scripts usando las utilerías rsync, tar y scp. 
