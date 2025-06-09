@@ -15,7 +15,7 @@ Necesitas un script que cree un nuevo usuario de sistema, establezca un director
 
 ### Instrucciones:
 
-### Tarea 1. Crea el Script
+### Tarea 1. Crear el Script
 
 Paso 1. Abre tu editor de texto favorito (por ejemplo, `nano`):
 
@@ -119,7 +119,7 @@ Necesitas enviar un mensaje de prueba una sola vez en 5 minutos y luego configur
 
 ### Instrucciones
 
-### Tarea 1. Tarea única con `at`:
+### Tarea 1. Tarea única con `at`
 
 Paso 1. Programa un mensaje para que aparezca en tu terminal (usando `wall`) en 5 minutos.
 
@@ -129,7 +129,7 @@ Paso 1. Programa un mensaje para que aparezca en tu terminal (usando `wall`) en 
     at> <Ctrl+D>
     ```
 
-Paso 2. Verifica la cola de `at`:
+Paso 2. Verifica la cola de `at`.
 
     ```bash
     atq
@@ -227,7 +227,7 @@ Necesitas analizar el log de autenticación (`/var/log/auth.log`) para encontrar
 
 ### Instrucciones.
 
-### Tarea 1. Genera datos de prueba (simulados)
+### Tarea 1. Generar datos de prueba (simulados)
 
 Paso 1. Abre una nueva terminal y falla algunos intentos de login con usuarios inexistentes o contraseñas incorrectas para generar entradas en `/var/log/auth.log`.
 
@@ -309,14 +309,14 @@ Tienes un log de aplicación ficticio en formato JSON y necesitas extraer inform
 
 ### Instrucciones
 
-### Tarea 1. Instala `jq`
+### Tarea 1. Instalar `jq`
 
     ```bash
     sudo apt update
     sudo apt install jq -y
     ```
 
-### Tarea 2. Crea un archivo de log JSON de ejemplo
+### Tarea 2. Crear un archivo de log JSON de ejemplo
 
     ```bash
     nano /tmp/app_log.json
@@ -333,7 +333,7 @@ Pega el siguiente contenido (cada objeto JSON en una línea separada para simula
     {"timestamp": "2025-05-24T10:05:10Z", "level": "INFO", "source": "auth_service", "message": "User 'charlie' logged out", "user_id": "user-104", "event_id": "pqr6"}
     ```
 
-### Tarea 3. Visualiza JSON legible (`.`)
+### Tarea 3. Visualizar JSON legible (`.`)
 
     ```bash
     cat /tmp/app_log.json | jq .
@@ -341,7 +341,7 @@ Pega el siguiente contenido (cada objeto JSON en una línea separada para simula
 
 Observa cómo `jq` formatea el JSON para una mejor lectura.
 
-### Tarea 4. Extrae campos específicos
+### Tarea 4. Extraer campos específicos
 
 Paso 1. Muestra el `timestamp` y el `message` de cada entrada:
 
@@ -355,7 +355,7 @@ Paso 2. Muestra el `level` y el `source`:
     cat /tmp/app_log.json | jq '.level, .source'
     ```
 
-### Tarea 5. Filtra por valor de campo (`select()`)
+### Tarea 5. Filtrar por valor de campo (`select()`)
 
 Paso 1. Muestra solo las entradas de log con `level` "ERROR".
 
@@ -369,7 +369,7 @@ Paso 2. Muestra logs del `source` "auth_service".
     cat /tmp/app_log.json | jq 'select(.source == "auth_service")'
     ```
 
-### Tarea 6. Combina extracción y filtrado:
+### Tarea 6. Combinar extracción y filtrado
 
 Paso 1. Muestra el mensaje y el usuario (`user_id`) de todos los *logins* de "INFO".
 
@@ -379,7 +379,7 @@ Paso 1. Muestra el mensaje y el usuario (`user_id`) de todos los *logins* de "IN
 
 > Nota: `contains()` es una función de `jq` para buscar una subcadena.
 
-### Tarea 7. Transforma la salida (`{}` para objetos nuevos, `[]` para *arrays*):
+### Tarea 7. Transformar la salida (`{}` para objetos nuevos, `[]` para *arrays*)
 
 Paso 1. Crea un resumen de cada log como un objeto JSON más pequeño.
 
