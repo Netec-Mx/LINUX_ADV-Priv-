@@ -4,7 +4,6 @@
 
 - Simular y diagnosticar cuellos de botella de CPU, memoria y I/O de disco utilizando `top`, `htop`, `stress-ng`, `iostat` y `iotop`.
 
-
 ### Preparación del entorno
 
 Antes de comenzar, asegúrate de que tu máquina Ubuntu tenga acceso a Internet y los paquetes necesarios estén instalados:
@@ -50,14 +49,14 @@ Esta herramienta nos permitirá generar cargas artificiales en CPU, memoria y di
 Observa el uso de CPU (líneas superiores) y el promedio de carga (Load average). Deberían estar bajos (cercanos a 0 o al número de núcleos si no hay actividad).
 
 
-## Tarea 2. Abrir una SEGUNDA terminal y generar carga de CPU 
+## Tarea 2. Abrir una segunda terminal y generar carga de CPU 
 Vamos a estresar 2 núcleos de CPU durante 60 segundos. Si tienes 4 núcleos, esto debería poner la CPU al 50%. Ajusta 2 al número de núcleos que desees estresar.
 
     ```bash
     stress-ng --cpu 2 --timeout 60s
     ```
 
-### Tarea 3. Volver a la PRIMERA terminal (donde se ejecuta htop)
+### Tarea 3. Volver a la primera terminal (donde se ejecuta htop)
 
 Paso 1. **Observa el uso de CPU:** Deberías ver uno o más núcleos de CPU subiendo al 100% de uso, y el promedio de carga comenzando a subir significativamente.
 
@@ -73,7 +72,7 @@ Paso 3. **Esperar a que stress-ng termine (o cancelarlo con Ctrl+C):** Observa c
 
 Toma nota de la memoria "used", "free" y "available", así como el uso de "Swap".
 
-### Tarea 5. Abrir una SEGUNDA terminal y generar carga de memoria
+### Tarea 5. Abrir una segunda terminal y generar carga de memoria
 
 Vamos a asignar 1GB de memoria virtual. Ajusta `1G` si tienes poca RAM o quieres estresar más/menos.
 
@@ -81,7 +80,7 @@ Vamos a asignar 1GB de memoria virtual. Ajusta `1G` si tienes poca RAM o quieres
     stress-ng --vm 1 --vm-bytes 1G --timeout 60s
     ```
 
-### Tarea 6. Volver a la PRIMERA terminal (donde se ejecuta htop) y observa
+### Tarea 6. Volver a la primera terminal (donde se ejecuta htop) y observar
 
 Paso 1. **Uso de memoria:** La barra de memoria (`MiB Mem`) debería llenarse. Si el sistema tiene poca RAM, verás que el Swap comienza a usarse (la barra `MiB Swap` se llenará).
 
@@ -107,7 +106,7 @@ Paso 1. En una terminal, ejecuta iostat -x 1.
 
 Paso 2. Observa los valores de `%util` y `avgqu-sz` para tus discos (ej. `sda`). Deberían estar bajos. También observa `%iowait` en la sección `avg-cpu`.
 
-### Tarea 8. Abrir una SEGUNDA terminal y generar carga de I/O de disco
+### Tarea 8. Abrir una segunda terminal y generar carga de I/O de disco
 
 Vamos a crear y escribir en un archivo grande en `/tmp`.
 
@@ -120,13 +119,13 @@ Vamos a crear y escribir en un archivo grande en `/tmp`.
     * `--hdd-bytes 1G`: Opera con 1GB de datos.
     * `--temp-path /tmp`: Utiliza el directorio `/tmp` para los archivos temporales.
 
-### Tarea 9. Volver a la PRIMERA terminal (donde se ejecuta iostat -x 1)
+### Tarea 9. Volver a la primera terminal (donde se ejecuta iostat -x 1)
 
 Paso 1. **Observa %util y avgqu-sz:** Deberían subir significativamente (cercano al 100% y un valor alto respectivamente) para tu disco.
 
 Paso 2. **Observa %iowait en avg-cpu:** Este valor indica el tiempo que la CPU espera por operaciones de I/O. Debería aumentar.
 
-### Tarea 10. Abrir una TERCERA terminal y ejecutar iotop (puede requerir sudo)
+### Tarea 10. Abrir una tercera terminal y ejecutar iotop (puede requerir sudo)
 
     ```bash
     sudo iotop
@@ -368,7 +367,7 @@ Navega por la salida. Busca líneas que mencionen la detección de CPU, memoria,
 
 Esta es la forma más rápida de ver problemas potenciales. Si el sistema está sano, es posible que no veas muchos (o ningún) mensaje aquí.
 
-### Tarea 3. Buscar errores específicos de hardware en dmesg: 
+### Tarea 3. Buscar errores específicos de hardware en dmesg
 Vamos a simular la búsqueda de errores de disco (aunque es poco probable que tu VM tenga errores reales a menos que la host-machine los tenga).
 
     ```bash
@@ -377,7 +376,7 @@ Vamos a simular la búsqueda de errores de disco (aunque es poco probable que tu
 
 Si tuvieras un problema de I/O de disco, aquí lo verías.
 
-### Tarea 4. Monitorear dmesg en tiempo real: 
+### Tarea 4. Monitorear dmesg en tiempo real
 
 Paso 1. Abre una terminal y ejecuta.
 
@@ -421,13 +420,13 @@ Esto es útil si sabes cuándo ocurrió un problema.
 
 Esto te mostrará mensajes relacionados con el sistema de archivos Ext4, útil si tienes problemas de montaje o corrupción de datos.
 
-### Tarea 5. Limpiar el buffer de dmesg para una nueva depuración (Opcional)
+### Tarea 5. Limpiar el buffer de dmesg para una nueva depuración (opcional)
 
     ```bash
     sudo dmesg -c
     ```
 
-> ¡Cuidado! Esto borra el buffer actual. Solo hazlo si quieres empezar a depurar un problema nuevo y quieres que `dmesg` solo muestre los mensajes desde ese momento.
+> **¡Cuidado!** Esto borra el buffer actual. Solo hazlo si quieres empezar a depurar un problema nuevo y quieres que `dmesg` solo muestre los mensajes desde ese momento.
 
 ---
 
