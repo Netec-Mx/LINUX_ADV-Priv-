@@ -9,7 +9,7 @@
 
 ### Instrucciones
 
-### Tarea 1.  Inspección de interfaces y direcciones IP (`ip addr show`):
+### Tarea 1.  Inspección de interfaces y direcciones IP (`ip addr show`)
 
 Paso 1. Abre una terminal.
 Paso 2. Muestra todas las interfaces de red y sus direcciones IP configuradas.
@@ -18,13 +18,13 @@ Paso 3. Identifica tu interfaz principal (ej., `eth0`, `enp0s3`, `ens33`) y su d
     * `# O la forma más concisa: ip a`
 
 
-### Tarea 2. Visualización de la tabla de enrutamiento (`ip route show`):
+### Tarea 2. Visualización de la tabla de enrutamiento (`ip route show`)
 
 Muestra la tabla de enrutamiento del kernel, incluyendo la puerta de enlace predeterminada (`default via`). 
     - `ip route show`
 
 
-### Tarea 3. Monitoreo de conexiones y puertos (`ss`, `netstat`):**
+### Tarea 3. Monitoreo de conexiones y puertos (`ss`, `netstat`)
 
 Paso 1. Lista todos los puertos de escucha y conexiones activas para TCP y UDP (se prefiere `ss` por ser más moderno y eficiente):
         * `ss -tuln` # TCP y UDP, en escucha, numérico
@@ -34,23 +34,23 @@ Paso 2. Filtra para ver si un servicio es específico (ej., SSH en puerto 22) es
         * `ss -tuln | grep :22` [cite: 9]
         * `(Alternativa más antigua: netstat -tuln)`
 
-### Tarea 4.  Diagnóstico de conectividad (`ping`, `traceroute`):
+### Tarea 4.  Diagnóstico de conectividad (`ping`, `traceroute`)
 
-Paso 1. Haz un ping a tu puerta de enlace para verificar la conectividad local (reemplaza `<DIRECCION_IP_DE_TU_GATEWAY>` con la IP obtenida en el paso 1):
+Paso 1. Haz un ping a tu puerta de enlace para verificar la conectividad local (reemplaza `<DIRECCION_IP_DE_TU_GATEWAY>` con la IP obtenida en la tarea 1):
         * `ping -c 4 <DIRECCION_IP_DE_TU_GATEWAY>`
 
-Paso 2. Haz un ping a un host externo (ej., Google DNS) para verificar la conectividad a Internet:
+Paso 2. Haz un ping a un host externo (ej., Google DNS) para verificar la conectividad a Internet.
         * `ping -c 4 8.8.8.8`
 
-Paso 3. Rastrea la ruta a un host externo para ver los saltos (instala `traceroute` si no lo tienes: `sudo apt install traceroute`):
+Paso 3. Rastrea la ruta a un host externo para ver los saltos (instala `traceroute` si no lo tienes: `sudo apt install traceroute`).
         * `traceroute 8.8.8.8`
 
-### Tarea 5. Consulta de la Caccé ARP (`ip neigh show`):
+### Tarea 5. Consulta de la caché ARP (`ip neigh show`)
     
 Paso 1. Muestra las entradas en la caché ARP (mapeo de direcciones IP a MAC).
     * `ip neigh show`
 
-### Tarea 6. Resolución de nombres DNS (`dig`):
+### Tarea 6. Resolución de nombres DNS (`dig`)
 
 Paso 1. Resuelve un nombre de dominio (ej., `google.com`) a su dirección IP usando los DNS configurados en tu sistema:
         * `dig google.com`
@@ -75,7 +75,7 @@ Paso 2. Realiza una consulta a un servidor DNS específico (ej., `1.1.1.1` - Clo
   
 ### Instrucciones:
 
-### Tarea 1. Identifica tu interfaz de red principal y su configuración actual:
+### Tarea 1. Identifica tu interfaz de red principal y su configuración actual
     
     * `ip a show` # Identifica el nombre de la interfaz (ej. 'enp0s3')
 
@@ -85,9 +85,9 @@ Paso 2. Revisa tu archivo Netplan para entender la configuración persistente (n
         * `cat /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml` # Ej. `00-installer-config.yaml` 
 
 
-### Tarea 2. Configura una IP estática temporalmente (en RAM, no persistente):
+### Tarea 2. Configura una IP estática temporalmente (en RAM, no persistente)
 
-> ¡ADVERTENCIA!** Esto puede cortar tu conexión actual si no estás en la consola.
+> **¡ADVERTENCIA!** Esto puede cortar tu conexión actual si no estás en la consola.
 
 Paso 1. Reemplaza `<NOMBRE_INTERFAZ>`, `<IP_ESTATICA_EJEMPLO>`, `<PREFIJO_EJEMPLO>`, `<IP_GATEWAY_EJEMPLO>` con valores adecuados para tu red local. 
 
@@ -104,7 +104,7 @@ Paso 1. Reemplaza `<NOMBRE_INTERFAZ>`, `<IP_ESTATICA_EJEMPLO>`, `<PREFIJO_EJEMPL
     sudo ip route add default via <IP_GATEWAY_EJEMPLO>` # Ej: `192.168.1.1
 ```
 
-Paso 2. Verifica la nueva IP y la ruta:
+Paso 2. Verifica la nueva IP y la ruta.
 
 ```
    ip a show <NOMBRE_INTERFAZ>
@@ -113,7 +113,7 @@ Paso 2. Verifica la nueva IP y la ruta:
 ````
 
 
-### Tarea 3.  Restaurar a DHCP temporalmente:
+### Tarea 3.  Restaurar a DHCP temporalmente
 
 ```
     Libera la IP y solicita una nueva por DHCP:
@@ -125,7 +125,7 @@ Paso 2. Verifica la nueva IP y la ruta:
 ```
 
 
-### Tarea 4. Configuración Persistente con Netplan (Archivos .yaml):
+### Tarea 4. Configuración Persistente con Netplan (Archivos .yaml)
 
     Los cambios hechos con `ip` y `dhclient` son temporales y se perderán al reiniciar.
     Netplan gestiona la configuración persistente. 
@@ -152,16 +152,16 @@ network:
         sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.
 ```
 
-Paso 1. Aplica la configuración de Netplan:
+Paso 1. Aplica la configuración de Netplan.
         * `sudo netplan apply`
      
 Si hay errores, `netplan apply` los mostrará. Corrígelos en el `.yaml`. 
 
-Paso 2. Verifica la nueva IP y la ruta persistentes:
+Paso 2. Verifica la nueva IP y la ruta persistentes.
         * `ip a show <NOMBRE_INTERFAZ>`
         * `ip route show`
         
-Paso 3. Para volver a DHCP de forma persistente (edita el archivo `.yaml` de nuevo):
+Paso 3. Para volver a DHCP de forma persistente (edita el archivo `.yaml` de nuevo).
 
 ```
         network:
@@ -196,14 +196,14 @@ Paso 3. Para volver a DHCP de forma persistente (edita el archivo `.yaml` de nue
 
 ### Instrucciones
 
-### Tarea 1.  Identifica tu interfaz física principal:
+### Tarea 1.  Identifica tu interfaz física principal
     
     * `ip a`
 
 Paso 1. Toma nota del nombre de tu interfaz principal (ej., `enp0s3`, `ens33`). 
 Paso 2. Asegúrate de que no es `lo` (loopback). 
 
-### Tarea 2.  Configura la subinterfaz VLAN (temporalmente):
+### Tarea 2.  Configura la subinterfaz VLAN (temporalmente)
 
 Paso 1. Crea una subinterfaz para la VLAN ID 10. 
 Paso 2. Reemplaza `<NOMBRE_INTERFAZ>` con tu interfaz física. 
@@ -218,10 +218,10 @@ Paso 2. Reemplaza `<NOMBRE_INTERFAZ>` con tu interfaz física.
 
 ```
 
-### Tarea 3. Verifica la nueva subinterfaz y su dirección IP:
+### Tarea 3. Verifica la nueva subinterfaz y su dirección IP
     * `ip a show <NOMBRE_INTERFAZ>.10`
 
-### Tarea 4. Configuración Persistente de Subinterfaz (Netplan):
+### Tarea 4. Configuración persistente de subinterfaz (Netplan)
 
 Los cambios anteriores son temporales, para hacerlos persistentes, edita tu archivo Netplan.
     
@@ -254,20 +254,20 @@ Paso 2. Edita el archivo `.yaml` para añadir la VLAN (ejemplo):
         
         * `sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml`
    
-Paso 3. Aplica la configuración de Netplan:
+Paso 3. Aplica la configuración de Netplan.
         * `sudo netplan apply`
    
     * Si hay errores, corrígelos en el `.yaml`.
 
-Paso 4. Verifica la subinterfaz después de aplicar Netplan:
+Paso 4. Verifica la subinterfaz después de aplicar Netplan.
         * `ip a show <NOMBRE_INTERFAZ>.10`
 
-### Tarea 5. Prueba la conectividad (requiere otro dispositivo en la misma VLAN):
+### Tarea 5. Prueba la conectividad (requiere otro dispositivo en la misma VLAN)
 
 Si tienes otra VM o un dispositivo físico configurado en la misma VLAN (ID 10) y segmento de red (ej., 192.168.10.x), intenta hacer ping a su dirección IP desde esta VM:
         * `ping -c 3 192.168.10.X` # Reemplaza con la IP del otro dispositivo en la VLAN
 
-### Tarea 6.  Limpia la configuración de VLAN (después del laboratorio):
+### Tarea 6.  Limpia la configuración de VLAN (después del laboratorio)
 
 Paso 1. Edita tu archivo `.yaml` de Netplan y elimina la sección `vlans:` correspondiente a `<NOMBRE_INTERFAZ>.10`. 
     * `sudo nano /etc/netplan/<TU_ARCHIVO_NETPLAN>.yaml`
@@ -275,7 +275,7 @@ Paso 1. Edita tu archivo `.yaml` de Netplan y elimina la sección `vlans:` corre
 Paso 2. Aplica la configuración modificada:
         * `sudo netplan apply`
 
-Paso 3. Verifica que la subinterfaz ya no existe:
+Paso 3. Verifica que la subinterfaz ya no existe.
         * `ip a show <NOMBRE_INTERFAZ>.10` # Debería decir "Does not exist"
 
 ---
@@ -293,15 +293,15 @@ Paso 3. Verifica que la subinterfaz ya no existe:
 
 - Acceso a tu máquina Ubuntu (se recomienda VM para practicar sin afectar tu máquina principal). 
 
-> **IMPORTANTE:** Si te conectas a la VM por SSH, **ASEGÚRATE** de añadir una regla para permitir el puerto SSH (22) **ANTES** de habilitar el firewall, o te bloquearás a ti mismo. 
+> **Importante:** Si te conectas a la VM por SSH, **ASEGÚRATE** de añadir una regla para permitir el puerto SSH (22) **ANTES** de habilitar el firewall, o te bloquearás a ti mismo. 
 
 ### Instrucciones:
 
-### Tarea 1.  Verificar el estado inicial de UFW:
+### Tarea 1.  Verificar el estado inicial de UFW
     * `sudo ufw status verbose`
     * Lo más probable es que esté `inactive` o `active` con reglas predeterminadas. 
 
-### Tarea 2. Establecer políticas por defecto de UFW:
+### Tarea 2. Establecer políticas por defecto de UFW
 
 Paso 1 Establece la política por defecto para denegar todo el tráfico entrante y permitir todo el tráfico saliente (recomendado para seguridad).
     * `sudo ufw default deny incoming`
@@ -310,9 +310,9 @@ Paso 1 Establece la política por defecto para denegar todo el tráfico entrante
 Paso 2. Verifica las políticas aplicadas:
         * `sudo ufw status verbose`
 
-### Tarea 3. Permitir el tráfico esencial (SSH):
+### Tarea 3. Permitir el tráfico esencial (SSH)
 
-> *¡Paso Crítico para conexiones SSH!
+> **¡Paso Crítico para conexiones SSH!**
 
 Paso 1. Permite el puerto 22 (SSH) para no perder el acceso remoto. 
     * `sudo ufw allow ssh` # UFW reconoce el servicio 'ssh' y lo asocia al puerto 22/tcp
@@ -321,7 +321,7 @@ Paso 1. Permite el puerto 22 (SSH) para no perder el acceso remoto.
 Paso 2.  Verifica que la regla se añadió:
         * `sudo ufw status verbose`
 
-### Tarea 4.  Habilitar el firewall UFW:
+### Tarea 4.  Habilitar el firewall UFW
 
     * `sudo ufw enable`
 Paso 1. Se te preguntará si estás seguro. Confirma con `y`.
@@ -329,7 +329,7 @@ Paso 1. Se te preguntará si estás seguro. Confirma con `y`.
 Paso 2. Verifica que UFW está activo:
         * `sudo ufw status verbose` # Debería mostrar 'Status: active'
 
-### Tarea 5. Añadir reglas para otros servicios comunes:
+### Tarea 5. Añadir reglas para otros servicios comunes
     
 Paso 1. Permite el tráfico web (puertos 80 para HTTP y 443 para HTTPS):
         * `sudo ufw allow http`
@@ -340,12 +340,12 @@ Paso 2. Permite un puerto no estándar específico (ej., puerto 8080 para una ap
         * `sudo ufw allow 8080/tcp`
         * `sudo ufw status verbose`
 
-### Tarea 6. Denegar tráfico explícitamente:
+### Tarea 6. Denegar tráfico explícitamente
     * Denegar un puerto inseguro como Telnet (puerto 23):
         * `sudo ufw deny 23/tcp`
         * `sudo ufw status verbose`
 
-### Tarea 7. Probar las reglas del firewall:
+### Tarea 7. Probar las reglas del firewall
     * *Desde otra máquina:*
 
 Paso 1. Si tienes un servidor web (Apache/Nginx) instalado y corriendo en tu VM, intenta acceder a él desde un navegador. Debería funcionar (puertos 80/443 abiertos). 
@@ -356,21 +356,21 @@ Desde la misma VM (para verificar el tráfico saliente):
 
 Paso 3. Intenta hacer un ping a un sitio web (debería funcionar, ya que el tráfico saliente está permitido): `ping -c 3 google.com`
 
-### Tarea 8. Gestionar y restablecer las reglas del firewall (después del laboratorio):
+### Tarea 8. Gestionar y restablecer las reglas del firewall (después del laboratorio)
 
-Paso 1. Lista las reglas con números para facilitar su eliminación:
+Paso 1. Lista las reglas con números para facilitar su eliminación.
         * `sudo ufw status numbered`
 
-Paso 2. Borra una regla específica por su número (ej., si la regla de Telnet es la número 3):
+Paso 2. Borra una regla específica por su número (ej., si la regla de Telnet es la número 3).
         * `sudo ufw delete 3`
 
-Paso 3. Restablecer UFW a su estado predeterminado (elimina todas las reglas añadidas):
+Paso 3. Restablecer UFW a su estado predeterminado (elimina todas las reglas añadidas).
         * `sudo ufw reset`
 
 Paso 4. Esto te preguntará si estás seguro. Confirma con `y`. 
     * Esto dejará UFW deshabilitado si no lo habilitaste después de reset. 
 
-Paso 5. Deshabilitar UFW completamente:
+Paso 5. Deshabilitar UFW completamente.
         * `sudo ufw disable`
 
 ---
@@ -391,7 +391,7 @@ Paso 5. Deshabilitar UFW completamente:
 
 ### Instrucciones:
 
-### Tarea 1.  Identifica tu interfaz de red principal:
+### Tarea 1. Identificar tu interfaz de red principal
 
 Paso 1. Necesitarás saber qué interfaz está manejando tu tráfico (ej., `enp0s3`, `eth0`, `wlan0`).
     * `ip a show`
@@ -400,14 +400,14 @@ Paso 1. Necesitarás saber qué interfaz está manejando tu tráfico (ej., `enp0
 
 Paso 2. Toma nota del nombre de tu interfaz (usaremos `<NOMBRE_INTERFAZ>` en los ejemplos). 
 
-### Tarea 2. Captura todo el tráfico en una interfaz (interrumpe con Ctrl+C):
+### Tarea 2. Capturar todo el tráfico en una interfaz (interrumpe con Ctrl+C)
 Esto mostrará todos los paquetes que pasan por la interfaz.
 
 Observa las direcciones IP, puertos y protocolos.
     * `sudo tcpdump -i <NOMBRE_INTERFAZ>`
 
 
-### Tarea 3. Filtra el tráfico por host:
+### Tarea 3. Filtrar el tráfico por host:
 
 Paso 1. Captura solo el tráfico hacia/desde una dirección IP específica (ej., `8.8.8.8` - Google DNS):
      
@@ -420,7 +420,7 @@ Paso 3. Haz un `dig google.com @8.8.8.8` para ver los paquetes DNS.
 
 Paso 4. Observa cómo `tcpdump` solo muestra el tráfico relacionado con `8.8.8.8`. 
 
-### Tarea 4. Filtra el tráfico por puerto:
+### Tarea 4. Filtrar el tráfico por puerto
 
 Paso 1. Captura solo el tráfico HTTP (puerto 80). 
 
@@ -432,7 +432,7 @@ Paso 3. Captura solo el tráfico SSH (puerto 22).
 Paso 4. Si te conectas por SSH, abre una nueva sesión SSH a tu VM. 
     * `sudo tcpdump -i <NOMBRE_INTERFAZ> port 22`
 
-### Tarea 5. Filtra el tráfico por protocolo:
+### Tarea 5. Filtrar el tráfico por protocolo:
 
 Paso 1. Captura solo el tráfico ICMP (usado por `ping`):
          `sudo tcpdump -i <NOMBRE_INTERFAZ> icmp`
@@ -444,7 +444,7 @@ Paso 3. Captura solo el tráfico DNS (usado por `dig`). DNS utiliza UDP en el pu
 
 Paso 4. Mientras corre, haz un `dig example.com` en otra terminal. 
 
-### Tarea 6.  Guardar y leer capturas de tráfico:
+### Tarea 6. Guardar y leer capturas de tráfico
 
 Paso 1. Guarda una captura en un archivo `.pcap` (útil para análisis posterior o para abrir con Wireshark).
 
@@ -454,6 +454,6 @@ Paso 2. Captura 100 paquetes (`-c 100`) y guárdalos en `mi_captura.pcap`:
 Paso 3. Lee el contenido del archivo `.pcap` que acabas de crear:
         * `sudo tcpdump -r mi_captura.pcap`
 
-### Tarea 7. Limpia (elimina el archivo de captura):
+### Tarea 7. Limpiar (elimina el archivo de captura)
     * `rm mi_captura.pcap`
 
