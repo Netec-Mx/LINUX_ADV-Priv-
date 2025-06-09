@@ -1,4 +1,4 @@
-# Práctica 4.1. Configuración de Servicios (SSH y NTP) y Gestión de Puertos con UFW
+# Práctica 4.1. Configuración de servicios (SSH y NTP) y gestión de puertos con UFW
 
 ## Objetivos de la práctica:
 
@@ -88,7 +88,7 @@ Paso 3. Deja `PasswordAuthentication yes` por ahora. Lo cambiaremos a `no` DESPU
 
 > **En `cliente-ubuntu` (o tu máquina local):**
 
-### Tarea 1. Generar un par de claves SSH (si no tienes uno)
+### Tarea 8. Generar un par de claves SSH (si no tienes uno)
     
     ```bash
     ssh-keygen -t rsa -b 4096 -C mi_clave_lab@ejemplo.com
@@ -97,7 +97,7 @@ Paso 3. Deja `PasswordAuthentication yes` por ahora. Lo cambiaremos a `no` DESPU
 Paso 1. Presiona Enter para la ubicación por defecto (`~/.ssh/id_rsa`).
 Paso 2. Introduce una frase de contraseña (`passphrase`) fuerte cuando se te pida. Esto protege tu clave privada.
 
-### Tarea 2. Copiar la clave pública al `servidor-ubuntu`
+### Tarea 9. Copiar la clave pública al `servidor-ubuntu`
 
 Paso 1. Reemplaza `usuario_remoto` con el nombre de usuario que usas en `servidor-ubuntu` (no root), `IP_servidor` con la IP de `servidor-ubuntu` y `2222` con tu puerto SSH.
 
@@ -105,9 +105,9 @@ Paso 1. Reemplaza `usuario_remoto` con el nombre de usuario que usas en `servido
     ssh-copy-id -p 2222 usuario_remoto@IP_servidor
     ```
     
-- Te pedirá la contraseña del `usuario_remoto` en `servidor-ubuntu`[cite: 20].
+- Te pedirá la contraseña del `usuario_remoto` en `servidor-ubuntu`.
 
-### Tarea 3. Probar la conexión SSH usando la clave
+### Tarea 10. Probar la conexión SSH usando la clave
     
     ```bash
     ssh -p 2222 usuario_remoto@IP_servidor
@@ -121,20 +121,20 @@ Revisa el archivo `/var/log/auth.log` en el servidor si tienes problemas.
 
 > **En `servidor-ubuntu` (una vez confirmada la conexión con clave):**
 
-### Tarea 4. Deshabilitar la autenticación por contraseña
+### Tarea 11. Deshabilitar la autenticación por contraseña
     
     ```bash
     sudo nano /etc/ssh/sshd_config
     ```
 Busca la línea `PasswordAuthentication yes` y cámbiala a `PasswordAuthentication no`.
 
-### Tarea 5. Reiniciar el servicio SSH
+### Tarea 12. Reiniciar el servicio SSH
     
     ```bash
     sudo systemctl restart ssh
     ```
 
-### Tarea 6. Probar nuevamente la conexión desde `cliente-ubuntu`
+### Tarea 13. Probar nuevamente la conexión desde `cliente-ubuntu`
     
     ```bash
     ssh -p 2222 usuario_remoto@IP_servidor
@@ -208,9 +208,7 @@ Este laboratorio se enfoca en usar las herramientas `ss` y `lsof` para inspeccio
 - Usar `lsof` para encontrar qué proceso está usando un puerto específico.
 - Instalar y configurar Apache HTTP Server para un servicio adicional.
 
-**Máquinas:** `servidor-ubuntu`[cite: 36].
-
----
+**Máquinas:** `servidor-ubuntu`.
 
 #### Análisis de puertos y sockets con `ss`
 
@@ -298,7 +296,7 @@ Paso 2. Cierra la sesión SSH de prueba.
         apache2   PID_APACHE root  4u  IPv4 xxxxx      0t0  TCP *:http (LISTEN)
         ```
 
-### Tarea 2. Identificar todos los sockets de red abiertos por el proceso `apache2`:
+### Tarea 2. Identificar todos los sockets de red abiertos por el proceso `apache2`
 
 Paso 1. Primero, encuentra el PID del proceso principal de `apache2` (lo viste con `ss -ltnp` o `systemctl status apache2`).
     
